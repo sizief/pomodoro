@@ -1,0 +1,8 @@
+#progress {
+  color: #4d606e;
+  font-size: 4rem;
+  display: inline-block;
+  padding: 2rem;
+  margin: auto;
+  width: 40%;
+}
