@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './App.scss';
 import Countdown from './Countdown';
 import Progress from './Progress';
 import Total from './Total';
@@ -49,7 +49,7 @@ class App extends Component{
     let topElement;
     if (counting){
       topElement = <Countdown  
-	seconds={seconds}
+	seconds={seconds*60}
 	onDone={this.handleDone} 
       />
     }else{
@@ -67,7 +67,9 @@ class App extends Component{
 
     return (
       <div className="App">
-        {this.topElement(this.state.counting)}
+        <div className="top">
+          {this.topElement(this.state.counting)}
+	</div>
         <div className="bottom">
           <Progress numberOfDone={this.state.numberOfDone}/>  
           <Total 

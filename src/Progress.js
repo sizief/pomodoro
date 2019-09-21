@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
-import './Progress.css';
+import './Progress.scss';
 
 class Progress extends Component{
   render() {
     return (
-      <div id="progress">{this.props.numberOfDone}/4</div>
+      <div id="progress">
+        <div className="number">{this.props.numberOfDone}/4</div>
+	<div className="title">Pomodoro</div>
+      </div>
     )
   }
 }

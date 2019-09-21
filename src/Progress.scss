@@ -1,8 +1,14 @@
 #progress {
-  color: #4d606e;
-  font-size: 4rem;
   display: inline-block;
+  color: #4d606e;
   padding: 2rem;
   margin: auto;
   width: 40%;
+  .number {
+    font-size: 4rem;
+  }
+
+  .title {
+  }
 }
+
