@@ -16,7 +16,8 @@ class App extends Component{
       numberOfBreak: 0,
       total: 0,
       counting: false,
-      isBreak: false
+      isBreak: false,
+      firstTime: true
     }
     this.handleDone = this.handleDone.bind(this);
     this.handleStartCounting = this.handleStartCounting.bind(this);
@@ -25,13 +26,18 @@ class App extends Component{
   handleDone() {
     this.setState({counting: false});
 
-    if (this.state.isBreak) return; //Only count work periods not breaks
+    if (this.state.isBreak) return; //Only count WORK periods not BREAKS
 
     if (this.state.numberOfDone < 3) {
-      this.setState({numberOfDone: this.state.numberOfDone+1});
+      this.setState({
+	numberOfDone: this.state.numberOfDone+1,
+        firstTime: false
+      });
     } else {
-      this.setState({numberOfDone: 0});
-      this.setState({total: this.state.total+1});
+      this.setState({
+	numberOfDone: 0,
+        total: this.state.total+1
+      });
     }
   }
 
@@ -57,6 +63,7 @@ class App extends Component{
 	onStartCounting = {this.handleStartCounting} 
         workTime = {this.WORK_TIME}
         breakTime = {this.BREAK_TIME}
+	firstTime = {this.state.firstTime}
       />;
 
     }

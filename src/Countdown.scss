@@ -1,5 +1,7 @@
+@import "colors.scss";
+
 #countdown {
-  color: #4d606e;
+  color: $counter;
   padding: 2rem;
   .number {
     font-size: 10rem;

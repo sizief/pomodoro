@@ -1,6 +1,8 @@
+@import "colors.scss";
+
 #progress {
   display: inline-block;
-  color: #4d606e;
+  color: $color2;
   padding: 2rem;
   margin: auto;
   width: 40%;

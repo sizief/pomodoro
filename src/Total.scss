@@ -1,9 +1,11 @@
+@import "colors.scss";
+
 #total{
-  color: #4d606e;
+  color: $color2;
   width: 48%;
   display: inline-block;
   margin: auto;
-  border-left: 2px solid #ccc;
+  border-left: 2px solid $color3;
 }
 
 .title {}
