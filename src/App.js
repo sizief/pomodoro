@@ -4,6 +4,7 @@ import Countdown from './Countdown';
 import Progress from './Progress';
 import Total from './Total';
 import CountingDialogue from './CountingDialogue';
+import Header from './Header';
 
 class App extends Component{
   BREAK_TIME = 5;
@@ -74,6 +75,7 @@ class App extends Component{
 
     return (
       <div className="App">
+	<Header isBreak={this.state.isBreak} counting={this.state.counting} />
         <div className="top">
           {this.topElement(this.state.counting)}
 	</div>

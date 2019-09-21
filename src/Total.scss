@@ -5,7 +5,11 @@
   width: 48%;
   display: inline-block;
   margin: auto;
-  border-left: 2px solid $color3;
+  border-left: 1px solid $color3;
+  @media screen and (max-width: 768px) { 
+    border-left: 0;
+    border-top: 1px solid $color3;
+  } 
 }
 
 .title {}

@@ -1,4 +1,8 @@
 @import "colors.scss";
+html, body {
+  height: 100%;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -9,18 +13,8 @@ body {
   background: $bg;
 }
 
-header { 
-  position: fixed; 
-  text-align: left; 
-  padding: 0.4rem; 
-  background: $header-bg; 
-  color: $bg; 
-  font-size: 12px;
-}
-
-#logo {
-  width: 15px; 
-  vertical-align: sub
+#root {
+  height: 100%;
 }
 
 footer {

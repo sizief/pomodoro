@@ -4,11 +4,15 @@
   color: $counter;
   padding: 2rem;
   .number {
-    font-size: 10rem;
+    font-size: 13rem;
+    @media screen and (max-width: 768px) {  
+      font-size: 8rem;
+    }
   }
 
   .control {
     cursor: pointer;
+    color: $color4;
   }
 }
 

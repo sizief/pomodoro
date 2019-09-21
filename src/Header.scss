@@ -1,0 +1,29 @@
+@import "colors.scss";
+
+.header { 
+  position: fixed; 
+  text-align: left; 
+  top: 0;
+  left: 0;
+  .title {
+    letter-spacing: 10px;
+    padding: 0.4rem; 
+    background: $header-bg; 
+    color: $color1; 
+    font-size: 12px;
+  }
+  .status {
+    background: $color3;
+    color: $color4;
+    font-size: 1.5rem;
+    text-align: center;  
+    font-weight: 100;
+  }
+}
+
+#logo {
+  width: 15px; 
+  vertical-align: sub;
+  padding-right: 10px;
+}
+
