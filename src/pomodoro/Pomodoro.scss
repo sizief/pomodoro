@@ -1,0 +1,31 @@
+@import "../colors.scss";
+
+#pomodoro {
+  text-align: center;
+  height: 98%;
+  width: 98%;
+  padding: 1%;
+  position: relative;
+  
+  .top {
+    position: absolute;
+    top: 0;
+    width: 91%;
+    padding: 4% 4%;
+    @media screen and (max-width: 768px) { 
+      padding: 2% 0;
+    } 
+  }
+
+  .bottom {
+    width: 98%;
+    display: block;
+    border-top: 1px solid $color3;
+    position: absolute;
+    top: 70%;
+    @media screen and (max-width: 768px) { 
+      top: 55%;
+    } 
+  }
+}
+

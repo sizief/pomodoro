@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Link } from "react-router-dom";
 import './Header.scss';
 
 class Header extends Component{
@@ -14,11 +15,17 @@ class Header extends Component{
 
   render() {
     return(
-      <div className="header">	
+      <div className="header">
         <div className="title">
-	  <img src="pomodoro.png" id="logo"/>
-          POMODORO
+	  <Link to="/">
+	    <img src="pomodoro.png" id="logo" alt="pomodoro" title="pomodoro"/>
+            POMODORO
+	  </Link>
         </div>
+	<nav>
+          <Link to="history">History</Link>
+        </nav>
+
 	{this.status()}      
       </div>
     );
