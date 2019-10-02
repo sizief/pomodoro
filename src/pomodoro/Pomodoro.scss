@@ -12,9 +12,6 @@
     top: 0;
     width: 91%;
     padding: 4% 4%;
-    @media screen and (max-width: 768px) { 
-      padding: 2% 0;
-    } 
   }
 
   .bottom {
@@ -22,10 +19,8 @@
     display: block;
     border-top: 1px solid $color3;
     position: absolute;
-    top: 70%;
-    @media screen and (max-width: 768px) { 
-      top: 55%;
-    } 
+    bottom:5%;
+    left:0;
   }
 }
 

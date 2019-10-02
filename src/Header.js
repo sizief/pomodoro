@@ -22,9 +22,9 @@ class Header extends Component{
             POMODORO
 	  </Link>
         </div>
-	<nav>
+	<div className="nav">
           <Link to="history">History</Link>
-        </nav>
+        </div>
 
 	{this.status()}      
       </div>

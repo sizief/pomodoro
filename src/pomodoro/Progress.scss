@@ -3,14 +3,11 @@
 #progress {
   display: inline-block;
   color: $color2;
-  padding: 2rem;
+  padding-top: 1%;
   margin: auto;
-  width: 40%;
+  width: 45%;
   .number {
     font-size: 4rem;
-  }
-
-  .title {
   }
 }
 

@@ -2,17 +2,12 @@
 
 #total{
   color: $color2;
-  width: 48%;
+  width: 44%;
   display: inline-block;
   margin: auto;
   border-left: 1px solid $color3;
-  @media screen and (max-width: 768px) { 
-    border-left: 0;
-    border-top: 1px solid $color3;
-  } 
 }
 
-.title {}
 .number {
   font-size: 4rem;
  }
