@@ -2,7 +2,9 @@ A simple POMODORO app.
 
 ### Deploy and run
 
-This project is setup on hotelhub server. Under the `/var/www/pomodoro`. It is hosted by Nginx and the config fot that is in `/etc/nginx/sites-available/flightnow.[i.r]`. To restart Nginx: `sudo systemctl restart nginx`. For more info check [this post](https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-server-blocks-virtual-hosts-on-ubuntu-16-04). Run `npm run build` to build.
+This project is setup on vpn server. Under the `/var/www/flightnow/pomodoro`. It is hosted by Nginx and the config fot that is in `/etc/nginx/sites-available/flightnow.[i.r]`  
+To restart Nginx: `sudo systemctl restart nginx`. For more info check [this post](https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-server-blocks-virtual-hosts-on-ubuntu-16-04).   
+Run `npm run build` to build.
 
 --  
   
