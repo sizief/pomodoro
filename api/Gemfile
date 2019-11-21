@@ -5,8 +5,10 @@ gem 'sinatra-contrib'
 gem 'rack'
 gem 'puma'
 gem 'dotenv'
+gem 'faraday'
 
 group :test do
   gem 'rack-test'
   gem 'rspec'
+  gem 'vcr'
 end

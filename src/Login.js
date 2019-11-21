@@ -5,21 +5,27 @@ import UserContext from './context/UserContext'
 class Login extends Component{
   static contextType = UserContext
   
-  responseGoogle(response){
-    console.log('response is');
-
-    if (response.error) {
+  responseGoogle(response){    
+    if (response.error || !response.isSignedIn()) { // User did not login
       console.log(response.error);
-    }else{
-    console.log(response.isSignedIn());
-    console.log(response.getId());
-    var profile = response.getBasicProfile();
-    console.log(profile.getName());
-    console.log(profile.getGivenName());
-    console.log(profile.getFamilyName());
-    console.log(profile.getImageUrl());
-    console.log(profile.getEmail());
+      return false;
     }
+     console.log(response.tokenId);
+    var profile = response.getBasicProfile();
+    console.log(profile.getId());
+	  //user = 
+     // { 
+    //	  googleId: profile.getId(),
+//	  firstName: profile.getGivenName(),
+  //  	  familyName: profile.getFamilyName(),
+//	  imageUrl: profile.getImageUrl(),
+//	  email: profile.getEmail(),
+  //        loggedIn: false 
+    //  };
+     // console.log(user);
+      // send data to server
+      // if ok 200 update here else return false
+     // const user = this.context
   }
     
   googleLogin(){
