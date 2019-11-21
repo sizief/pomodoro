@@ -7,7 +7,8 @@ To restart Nginx: `sudo systemctl restart nginx`. For more info check [this post
 Run `npm run build` to build.
 
 --  
-  
+For development inside the project folder run `tmuxinator start`  
+ 
 In the project directory, you can run:
 
 ### `npm start`

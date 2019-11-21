@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Link } from "react-router-dom";
 import './Header.scss';
+import Login from './Login';
 
 class Header extends Component{
   status() {
@@ -25,7 +26,9 @@ class Header extends Component{
 	<div className="nav">
           <Link to="history">History</Link>
         </div>
-
+	<div className="login">
+	  <Login />
+	</div>
 	{this.status()}      
       </div>
     );
