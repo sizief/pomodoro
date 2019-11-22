@@ -32,9 +32,10 @@ post '/users' do
     status 400
     return oauth_user.json
   end
-
+  
   status 200
-  User.find_by_oauth(oauth_user).json
+  user = User.find_or_create_by(oauth_user.body)
+  user.to_json
 end
 
 

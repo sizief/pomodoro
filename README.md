@@ -12,9 +12,10 @@ Api is set at localhost:4000
 to test the Google Oauth, set pomodoro.ir in /etc/host and add url at https://console.developers.google.com/apis/credentials?project=pomodoro-1574243762652  
 We get token_id from google auth, and then on server side we examine if token_id is valid. 
 [Check this post for installing Postgress](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04)
-
-
-
+And then [here](https://github.com/sizief/cheatsheet/blob/master/postgres.md) to add user and database.
+    
+Create new migration with `bundle exec rake db:create_migration NAME=create_users`  
+Run migrations with `bundle exec rake db:migrate`
 
 
 

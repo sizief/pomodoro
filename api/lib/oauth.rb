@@ -17,8 +17,7 @@ class Oauth
     
     Message.new(
       error: false, 
-      body: JSON.parse(raw_response.body)
-    )
+      body: profile(JSON.parse(raw_response.body)))
   rescue Faraday::ConnectionFailed
     connection_refused
   end
@@ -32,13 +31,13 @@ class Oauth
     Message.new(error: true, body: 'Connection refused')
   end
 
-  def user_body(response)
+  def profile(response)
     {
-      email: response.email,
-      given_name: response.given_name,
-      family_name: response.family_name,
-      picture: response.picture,
-      provider_id: response.sub,
+      email: response['email'],
+      given_name: response['given_name'],
+      family_name: response['family_name'],
+      picture: response['picture'],
+      provider_user_id: response['sub'],
       provider: 'google'
     }
   end
