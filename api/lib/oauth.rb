@@ -11,7 +11,7 @@ class Oauth
        open_timeout: 2,   # opening a connection
         timeout: 5         # waiting for response
     })
-    connection.proxy "http://localhost:8485"
+    connection.proxy "http://localhost:8485" if ENV['APP_ENV'] == 'development'
     raw_response = connection.get google_url 
     return user_not_exist if raw_response.status != 200
     
@@ -23,6 +23,7 @@ class Oauth
     connection_refused
   end
 
+  private
   def user_not_exist
    Message.new(error: true, body: 'User is not exist')
   end

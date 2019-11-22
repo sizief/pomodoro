@@ -1,8 +1,7 @@
 require 'dotenv/load'
 require 'sinatra'
 require "sinatra/reloader" if development?
-require_relative './lib/oauth'
-require_relative './lib/message'
+require_relative './lib/pomodoro'
 
 get '/health-check' do
   "ok"
@@ -25,6 +24,7 @@ post '/users' do
     ).json
   end
 
+  # Get user profile from Google
   oauth_user = Oauth.new(payload['token_id']).call
 
   if oauth_user.error?
@@ -32,9 +32,8 @@ post '/users' do
     return oauth_user.json
   end
 
-  #user = User.find(oauth_user)
   status 200
-  oauth_user.json
+  User.find_by_oauth(oauth_user).json
 end
 
 

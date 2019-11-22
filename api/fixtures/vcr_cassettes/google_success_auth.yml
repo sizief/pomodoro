@@ -1,0 +1,74 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://oauth2.googleapis.com/tokeninfo?id_token=eyJhbGciOiJSUzI1NiIsImtpZCI6ImRiMDJhYjMwZTBiNzViOGVjZDRmODE2YmI5ZTE5NzhmNjI4NDk4OTQiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTQ3Mzc3MjAzNzc4LXJuYXMwMW5nOGlybnM1NGhwaG84MXJvb3N1b2FndWNxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTQ3Mzc3MjAzNzc4LXJuYXMwMW5nOGlybnM1NGhwaG84MXJvb3N1b2FndWNxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTAyNTUwODM2ODc1Nzk3MTQ5OTQ5IiwiZW1haWwiOiJzaXppZWZAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJibkdFbWJhUW5GeFhDeVJkRFAtb09nIiwibmFtZSI6IkFsaSBEZWlzaGlkaSIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS0vQUF1RTdtQV80aEpiQ3JjdTZFZVpPM21tNU1zOVN1TExFZ054bGpFWFhpLVJtdz1zOTYtYyIsImdpdmVuX25hbWUiOiJBbGkiLCJmYW1pbHlfbmFtZSI6IkRlaXNoaWRpIiwibG9jYWxlIjoiZW4iLCJpYXQiOjE1NzQ0Mzc3OTYsImV4cCI6MTU3NDQ0MTM5NiwianRpIjoiY2EzYmU5M2U0NDdjYjA4YzM4YjRlYWM5OTZiNTU2OWNmMzVlYzk1ZCJ9.C5N9lBdVQ2c_EJm5KzsZgelGJtT6psvZgRP5QRiWOCkYzTu2lEfTEy7LKWv3d1J-EN4ZreY9RxkbOtkPVu2Z0qBWNBY3SVteEcxgQIGFPgzUM0wIxxTyD0P75eMFrTcO6J3DMk1ksF6psPsw3ePyYH4HGlfPorEArY84WhHleM4wWkq5fG5gOnQKirGF3wwbd4W0wsDLGmwl-eLX2i5ALInk1VNyXaEWZuy0Zyei9cHPldl2INwx1fbxWKvQp4Ni1py08xoS0AYCgfffa-oYJVvsTZvsODi8ZYMx-ldOR66JAaJIi7VLqpOv5G5sGTZKbcL-OezY1t1QhWYzcUKz
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Date:
+      - Fri, 22 Nov 2019 15:53:07 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Server:
+      - ESF
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - quic=":443"; ma=2592000; v="46,43",h3-Q050=":443"; ma=2592000,h3-Q049=":443";
+        ma=2592000,h3-Q048=":443"; ma=2592000,h3-Q046=":443"; ma=2592000,h3-Q043=":443";
+        ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "iss": "accounts.google.com",
+          "azp": "377203778-rnas01ng8irns54hpho81roosuoagucq.apps.googleusercontent.com",
+          "aud": "377203778-rnas01ng8irns54hpho81roosuoagucq.apps.googleusercontent.com",
+          "sub": "2550836875797149949",
+          "email": "ali@gmail.com",
+          "email_verified": "true",
+          "at_hash": "bnGEmbaQnFxXCyRdDP-oOg",
+          "name": "Ali Deishidi",
+          "picture": "https://lh3.googleusercontent.com/a-/AAuE7mA_4hJbCrcu6EeZO3mm5Ms9SuLLEgNxljEXXi-Rmw=s96-c",
+          "given_name": "Ali",
+          "family_name": "Deishidi",
+          "locale": "en",
+          "iat": "574437796",
+          "exp": "574441396",
+          "jti": "3be93e447cb08c38b4eac996b5569cf35ec95d",
+          "alg": "RS256",
+          "kid": "ab30e0b75b8ecd4f816bb9e1978f62849894",
+          "typ": "JWT"
+        }
+    http_version: 
+  recorded_at: Fri, 22 Nov 2019 15:53:09 GMT
+recorded_with: VCR 5.0.0
