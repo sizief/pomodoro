@@ -38,7 +38,7 @@ class Oauth
       given_name: response.given_name,
       family_name: response.family_name,
       picture: response.picture,
-      id: response.sub,
+      provider_id: response.sub,
       provider: 'google'
     }
   end
