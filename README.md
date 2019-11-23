@@ -16,7 +16,7 @@ And then [here](https://github.com/sizief/cheatsheet/blob/master/postgres.md) to
     
 Create new migration with `bundle exec rake db:create_migration NAME=create_users`  
 Run migrations with `bundle exec rake db:migrate`
-
+Run Migration for other ENVs `bundle exec rake db:migrate RACK_ENV=test`
 
 
 

@@ -13,7 +13,7 @@ end
 #  authentication_code
 #
 # == Returns
-#  User 
+#  User.access_id 
 post '/users' do
   payload = JSON.parse(request.body.read)
   
@@ -35,7 +35,7 @@ post '/users' do
   
   status 200
   user = User.find_or_create_by(oauth_user.body)
-  user.to_json
+  {access: user.access_id}.to_json
 end
 
 

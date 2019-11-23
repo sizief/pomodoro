@@ -14,3 +14,11 @@ production:
   username: ENV['DATABASE_USERNAME']
   password: ENV['DATABASE_PASSWORD']
   host: localhost
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: pomodoro_test
+  pool: 15
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  host: localhost
