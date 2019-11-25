@@ -4,16 +4,20 @@ require "sinatra/reloader" if development?
 require "sinatra/activerecord"
 require_relative './lib/pomodoro'
 
-get '/health-check' do
-  "ok"
+before do
+  # Pass on selected routes
+  pass if ['/users','/health-check'].include? request.path_info
+  halt 401 if request.env['HTTP_AUTHORIZATION'].nil?
+  @user = User.find_by(access_id: request.env['HTTP_AUTHORIZATION'])
+  halt 401 if @user.nil?
 end
 
 # Create user or find user
 # == Parameters:
-#  authentication_code
+#  authentication_code <strign>
 #
 # == Returns
-#  User.access_id 
+#  user <User>
 post '/users' do
   payload = JSON.parse(request.body.read)
   
@@ -35,7 +39,32 @@ post '/users' do
   
   status 200
   user = User.find_or_create_by(oauth_user.body)
-  {access: user.access_id}.to_json
+  user.to_json
 end
 
+# Create pomodoro
+# == Header
+#  authurization <String>
+# == Parameters:
+#  topic <String>
+#  start <Timestamp>
+#  end <Timestamp>
+#
+post '/pomodoros' do
+  @user.to_json
+end
 
+# Create user or find user
+# == Header
+#  authurization <String>
+# == Parameters:
+#
+# == Returns
+#  Array<Pomodoro> 
+get '/pomodoros' do
+  'success'
+end
+
+get '/health-check' do
+  "ok"
+end
