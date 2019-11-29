@@ -4,8 +4,12 @@ import Countdown from './Countdown';
 import Progress from './Progress';
 import Total from './Total';
 import CountingDialogue from './CountingDialogue';
+import UserContext from '../context/UserContext'
+import axios from 'axios';
+import moment from 'moment';
 
 class Pomodoro extends Component{
+  static contextType = UserContext
   BREAK_TIME = 5;
   WORK_TIME = 25;
   
@@ -23,9 +27,28 @@ class Pomodoro extends Component{
     this.handleStartCounting = this.handleStartCounting.bind(this);
   }
 
+  async save(){
+    try{
+      const response = await axios({
+	method: 'post',
+        url: `${process.env.REACT_APP_API_ENDPOINT}/pomodoros`,
+	data: JSON.stringify(
+          {
+	    project_id: 'default', 
+            completed_at: moment().format("YYYY-MM-DD")
+	  }
+	),
+	headers: {'Authorization': this.context.access_id}
+      });
+    } catch(error){
+      //TODO: try again
+    }
+  }
+  
   handleDone() {
     let audio = new Audio('assets/definite.mp3');
     audio.play();
+    if (this.context.loggedIn) this.save();
     
     this.setState({counting: false});
 
