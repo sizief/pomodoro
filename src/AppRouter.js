@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Switch, Route } from "react-router-dom";
-import Pomodoro from './pomodoro/Pomodoro'
-import History from './History'
+import { Switch, Route } from 'react-router-dom';
+import Pomodoro from './pomodoro/Pomodoro';
+import History from './History';
 
-class AppRouter extends Component{
+class AppRouter extends Component {
   render() {
     return (
       <Switch>

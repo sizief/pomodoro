@@ -5,7 +5,8 @@ require "sinatra/activerecord"
 require_relative './lib/pomodoro'
 
 before do
-  # Pass on selected routes
+  headers 'Access-Control-Allow-Origin' => '*'
+  # Answer following routes even if AUTH is not available
   pass if ['/users','/health-check'].include? request.path_info
   halt 401 if request.env['HTTP_AUTHORIZATION'].nil?
   @user = User.find_by(access_id: request.env['HTTP_AUTHORIZATION'])
@@ -40,6 +41,9 @@ post '/users' do
   status 200
   user = User.find_or_create_by(oauth_user.body)
   user.to_json
+rescue JSON::ParserError
+  status 401
+  "Payload is not a valid JSON"
 end
 
 # Create pomodoro

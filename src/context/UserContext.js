@@ -1,7 +1,12 @@
-import React from 'react'
+import React from 'react';
 
-const UserContext = React.createContext({})
+const UserContext = React.createContext({});
 
-export const UserProvider = UserContext.Provider
-export const UserModel = { name: 'Guest', loggedIn: false }
-export default UserContext
+export const UserProvider = UserContext.Provider;
+export const UserModel = {
+  given_name: 'Guest',
+  family_name: null,
+  access_id: null,
+  loggedIn: false,
+};
+export default UserContext;

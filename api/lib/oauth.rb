@@ -24,7 +24,7 @@ class Oauth
 
   private
   def user_not_exist
-   Message.new(error: true, body: 'User is not exist')
+   Message.new(error: true, body: 'User is not exist in Google')
   end
 
   def connection_refused

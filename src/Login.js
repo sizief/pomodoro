@@ -1,38 +1,83 @@
 import React, {Component} from 'react';
 import GoogleLogin from 'react-google-login'
 import UserContext from './context/UserContext'
+import Loading from './common/loading'
+import axios from 'axios';
 
 class Login extends Component{
   static contextType = UserContext
+  AUTH_URL = 'users'
   
+  constructor(){
+    super();
+    this.state = {
+      loading: false,
+      loggedIn: false
+    }
+    this.loginUser = this.loginUser.bind(this)
+    this.responseGoogle = this.responseGoogle.bind(this)
+  }
+  
+  componentDidMount(){
+    if (localStorage.getItem('access_id')){ //User logged in before
+      this.loginUser(
+	localStorage.getItem('given_name'),
+        localStorage.getItem('access_id')
+      )
+    }
+  } 
+  
+  loginUser(given_name, access_id){
+    const userCx = this.context
+    userCx.loggedIn = true
+    userCx.given_name =  given_name
+    userCx.access_id = access_id  
+    this.setState({loggedIn: true})
+  }
+
+  async authenticate(tokenId){
+    const payload = { token_id: tokenId }
+    try{
+      const response = await axios({
+	method: 'post',
+        url: `${process.env.REACT_APP_API_ENDPOINT}/${this.AUTH_URL}`,
+	data: JSON.stringify(payload)
+      });
+      return response
+    } catch(error){
+      return error.response
+    }
+  }
+
   responseGoogle(response){    
     if (response.error || !response.isSignedIn()) { // User did not login
-      console.log(response.error);
       return false;
     }
-     console.log(response.tokenId);
-    var profile = response.getBasicProfile();
-    console.log(profile.getId());
-	  //user = 
-     // { 
-    //	  googleId: profile.getId(),
-//	  firstName: profile.getGivenName(),
-  //  	  familyName: profile.getFamilyName(),
-//	  imageUrl: profile.getImageUrl(),
-//	  email: profile.getEmail(),
-  //        loggedIn: false 
-    //  };
-     // console.log(user);
-      // send data to server
-      // if ok 200 update here else return false
-     // const user = this.context
+     this.setState({loading: true})
+     this.authenticate(response.tokenId).then(user => this.setUser(user))
+  }
+
+  setUser(remoteUser){
+    if (remoteUser.status === 200){
+      this.loginUser(
+        remoteUser.data.given_name,
+        remoteUser.data.access_id
+      )
+      this.storeUserOnBrowser(remoteUser.data)
+    }
+    this.setState({loading: false})
   }
     
-  googleLogin(){
+  storeUserOnBrowser(user){
+    localStorage.setItem('access_id', user.access_id);
+    localStorage.setItem('given_name', user.given_name);
+  }
+
+  googleLogin(){ 
     return(
       <div id="loginBox">
 	<GoogleLogin
-          clientId="547377203778-rnas01ng8irns54hpho81roosuoagucq.apps.googleusercontent.com"
+          clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
           onSuccess={this.responseGoogle}
           onFailure={this.responseGoogle}
 	  render={renderProps => (
@@ -47,9 +92,11 @@ class Login extends Component{
   
   render(){
     const user = this.context
-    
+    if (this.state.loading) {
+      return <Loading />
+    }
     if (user.loggedIn)
-      return user.name
+      return user.given_name
     else {
       return this.googleLogin();
     }
@@ -57,4 +104,3 @@ class Login extends Component{
 }
 
 export default Login; 
-
