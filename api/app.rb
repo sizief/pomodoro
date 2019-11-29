@@ -8,9 +8,17 @@ before do
   headers 'Access-Control-Allow-Origin' => '*'
   # Answer following routes even if AUTH is not available
   pass if ['/users','/health-check'].include? request.path_info
+  pass if request.env['REQUEST_METHOD'] == 'OPTIONS'
   halt 401 if request.env['HTTP_AUTHORIZATION'].nil?
   @user = User.find_by(access_id: request.env['HTTP_AUTHORIZATION'])
   halt 401 if @user.nil?
+end
+
+options "*" do
+  headers 'Allow' => "GET, PUT, POST, DELETE, OPTIONS"
+  headers 'Access-Control-Allow-Headers' => "Authorization, Content-Type, Accept"
+  headers 'Access-Control-Allow-Origin' => '*'
+  200
 end
 
 helpers do
@@ -78,7 +86,7 @@ post '/pomodoros' do
   )
   
   halt 400, 'project_id is not provided' if payload[:project_id].nil?
-  
+  payload[:project_id] = @user.projects.first.id if payload[:project_id] == 'default'  
   pomodoro = @user.projects.find(payload[:project_id]).pomodoros.create(payload)
   halt 200 if pomodoro.persisted?
   halt 400, pomodoro.errors.messages.to_json
