@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Pomodoro from './pomodoro/Pomodoro';
-import History from './History';
+import History from './history';
 
 class AppRouter extends Component {
   render() {

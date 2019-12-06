@@ -6,19 +6,18 @@ import axios from 'axios';
 
 class Login extends Component{
   static contextType = UserContext
-  AUTH_URL = 'users'
   
-  constructor(){
-    super();
+  constructor(props, context){
+    super(props, context);
     this.state = {
       loading: false,
-      loggedIn: false
     }
     this.loginUser = this.loginUser.bind(this)
     this.responseGoogle = this.responseGoogle.bind(this)
+    this.updateUserIfAlreadyLoggedIn()
   }
   
-  componentDidMount(){
+  updateUserIfAlreadyLoggedIn(){
     if (localStorage.getItem('access_id')){ //User logged in before
       this.loginUser(
 	localStorage.getItem('given_name'),
@@ -27,12 +26,12 @@ class Login extends Component{
     }
   } 
   
+  
   loginUser(given_name, access_id){
     const userCx = this.context
-    userCx.loggedIn = true
-    userCx.given_name =  given_name
-    userCx.access_id = access_id  
-    this.setState({loggedIn: true})
+    userCx.setLoggedIn(true)
+    userCx.setGivenName(given_name)
+    userCx.setAccessId(access_id)  
   }
 
   async authenticate(tokenId){
@@ -40,7 +39,7 @@ class Login extends Component{
     try{
       const response = await axios({
 	method: 'post',
-        url: `${process.env.REACT_APP_API_ENDPOINT}/${this.AUTH_URL}`,
+        url: `${process.env.REACT_APP_API_ENDPOINT}/users`,
 	data: JSON.stringify(payload)
       });
       return response
@@ -54,16 +53,25 @@ class Login extends Component{
       return false;
     }
      this.setState({loading: true})
-     this.authenticate(response.tokenId).then(user => this.setUser(user))
+     this.authenticate(response.tokenId).then(
+       user => 
+	 {
+	   if (typeof(user) !== 'undefined') {
+	     this.setUser(user)
+	   } else { //TODO: proper error handling
+             console.log('api is not responding')
+	   }
+	 }
+     )
   }
 
   setUser(remoteUser){
     if (remoteUser.status === 200){
+      this.storeUserOnBrowser(remoteUser.data)
       this.loginUser(
         remoteUser.data.given_name,
         remoteUser.data.access_id
       )
-      this.storeUserOnBrowser(remoteUser.data)
     }
     this.setState({loading: false})
   }
@@ -91,13 +99,13 @@ class Login extends Component{
   } 
   
   render(){
-    const user = this.context
+   const user = this.context
     if (this.state.loading) {
-      return <Loading />
+      return <Loading color="white"/>
     }
-    if (user.loggedIn)
-      return user.given_name
-    else {
+    if (user.loggedIn){
+      return user.givenName
+    }else {
       return this.googleLogin();
     }
   }

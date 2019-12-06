@@ -38,7 +38,7 @@ class Pomodoro extends Component{
             completed_at: moment().format("YYYY-MM-DD")
 	  }
 	),
-	headers: {'Authorization': this.context.access_id}
+	headers: {'Authorization': this.context.accessId}
       });
     } catch(error){
       //TODO: try again

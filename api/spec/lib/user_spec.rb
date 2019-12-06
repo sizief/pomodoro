@@ -1,8 +1,10 @@
-require File.expand_path '../../spec_helper.rb', __FILE__
+# frozen_string_literal: true
 
-describe "User" do
-  let(:user_info) {
-    { 
+require File.expand_path '../spec_helper.rb', __dir__
+
+describe 'User' do
+  let(:user_info) do
+    {
       given_name: 'Ali',
       family_name: 'Deishidi',
       provider_user_id: rand(0...9999),
@@ -10,18 +12,17 @@ describe "User" do
       email: 'john@doe.com',
       picture: 'http://myimage.com'
     }
-  }
+  end
 
-  it "should create user if not exists" do
+  it 'should create user if not exists' do
     user = User.create(user_info)
     p user.errors
     expect(User.find(user.id).id).to eq(user.id)
   end
-  
-  it "should not add user if provider_id exists" do
+
+  it 'should not add user if provider_id exists' do
     user_one = User.new(user_info).save
     user_two = User.new(user_info).save
     expect(user_two).to be_falsey
   end
-  
 end

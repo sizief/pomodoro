@@ -1,29 +1,32 @@
+# frozen_string_literal: true
+
+require 'date'
 require 'dotenv/load'
 require 'sinatra'
-require "sinatra/reloader" if development?
-require "sinatra/activerecord"
+require 'sinatra/reloader' if development?
+require 'sinatra/activerecord'
 require_relative './lib/pomodoro'
 
 before do
   headers 'Access-Control-Allow-Origin' => '*'
   # Answer following routes even if AUTH is not available
-  pass if ['/users','/health-check'].include? request.path_info
+  pass if ['/users', '/health-check'].include? request.path_info
   pass if request.env['REQUEST_METHOD'] == 'OPTIONS'
   halt 401 if request.env['HTTP_AUTHORIZATION'].nil?
   @user = User.find_by(access_id: request.env['HTTP_AUTHORIZATION'])
   halt 401 if @user.nil?
 end
 
-options "*" do
-  headers 'Allow' => "GET, PUT, POST, DELETE, OPTIONS"
-  headers 'Access-Control-Allow-Headers' => "Authorization, Content-Type, Accept"
+options '*' do
+  headers 'Allow' => 'GET, PUT, POST, DELETE, OPTIONS'
+  headers 'Access-Control-Allow-Headers' => 'Authorization, Content-Type, Accept'
   headers 'Access-Control-Allow-Origin' => '*'
   200
 end
 
 helpers do
   def permit(params, allowed)
-    params.each { |k,v| params.delete(k) unless allowed.include? k }
+    params.each { |k, _v| params.delete(k) unless allowed.include? k }
   end
 end
 
@@ -33,7 +36,11 @@ end
 # == Returns
 #  user <User>
 post '/users' do
-  payload = permit(JSON.parse(request.body.read, {symbolize_names: true}),  [:token_id])
+  payload = permit(
+    JSON.parse(
+      request.body.read, 
+      symbolize_names: true
+     ), [:token_id])
   halt 400, 'token_id is not provided' if payload[:token_id].nil?
 
   # Get user profile from Google
@@ -42,7 +49,7 @@ post '/users' do
 
   User.find_or_create_by(oauth_user.body).to_json
 rescue JSON::ParserError
-  halt 400, "Payload is not a valid JSON"
+  halt 400, 'Payload is not a valid JSON'
 end
 
 # == Header
@@ -53,23 +60,23 @@ end
 post '/projects' do
   payload = permit(
     JSON.parse(
-      request.body.read ,
-      {symbolize_names: true}
-    ), [:name, :estimated_pomodoro]
+      request.body.read,
+      symbolize_names: true
+    ), %i[name estimated_pomodoro]
   )
   project = @user.projects.create(payload)
   halt 200 if project.persisted?
   halt 400, project.errors.messages.to_json
 rescue JSON::ParserError
-  halt 400, "Payload is not a valid JSON"
+  halt 400, 'Payload is not a valid JSON'
 end
 
 # == Header
 #  authurization <String>
 # == Returns
-#  Array<Project> 
+#  Array<Project>
 get '/projects' do
-  @user.projects.select(:id,:name,:color).to_json
+  @user.projects.select(:id, :name, :color).to_json
 end
 
 # == Header
@@ -80,18 +87,22 @@ end
 post '/pomodoros' do
   payload = permit(
     JSON.parse(
-      request.body.read ,
-      {symbolize_names: true}
-    ), [:project_id, :completed_at]
+      request.body.read,
+      symbolize_names: true
+    ), %i[project_id completed_at]
   )
-  
+
   halt 400, 'project_id is not provided' if payload[:project_id].nil?
-  payload[:project_id] = @user.projects.first.id if payload[:project_id] == 'default'  
-  pomodoro = @user.projects.find(payload[:project_id]).pomodoros.create(payload)
+  if payload[:project_id] == 'default'
+    payload[:project_id] = @user.projects.first.id
+  end
+  pomodoro = @user.projects.find(
+               payload[:project_id]
+             ).pomodoros.create(payload)
   halt 200 if pomodoro.persisted?
   halt 400, pomodoro.errors.messages.to_json
 rescue JSON::ParserError
-  halt 400, "Payload is not a valid JSON"
+  halt 400, 'Payload is not a valid JSON'
 rescue ActiveRecord::RecordNotFound
   halt 400, 'project does not exists'
 end
@@ -99,19 +110,24 @@ end
 # == Header
 #  authurization <String>
 # == Returns
-#  Array<Pomodoro> 
+#  Array<Pomodoro>
 get '/pomodoros' do
-  result = {}
-  @user.projects.collect(&:pomodoros).first.each do |pmd|
-    date_key = pmd.completed_at.to_s.to_sym
-    result[date_key] = {} unless result.key?(date_key)
-    project_key = pmd.project_id.to_s.to_sym
-    count = result[date_key].key?(project_key) ? result[date_key][project_key]+1 : 1
-    result[date_key][project_key] =  count
+  result = {pomodoros: [], projects: []}
+  (-7..0).each do |offset|
+    date = Date.today+offset
+    item = {}
+    item[:completed_at] = date
+    Pomodoro.where(project_id: @user.projects).where(completed_at: date).each do |pmd| 
+      project_key = pmd.project.name.to_sym
+      item[project_key] = item.key?(project_key) ? item[project_key]+1 : 1
+      item["#{pmd.project.name}Color".to_sym] = 'hsl(228, 70%, 50%)' #pmd.project.color
+    end
+    result[:pomodoros].push item
   end
+  result[:projects] = @user.projects.map(&:name)
   result.to_json
 end
 
 get '/health-check' do
-  "ok"
+  'ok'
 end

@@ -4,4 +4,4 @@ root: ~/projects/pomodoro
 windows:
   - editor: vim src
   - npm: npm start
-  - bash:
+  - api: cd api; ruby app.rb

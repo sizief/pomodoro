@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'faraday'
 
 class Oauth
@@ -8,23 +10,25 @@ class Oauth
   def call
     google_url = "https://oauth2.googleapis.com/tokeninfo?id_token=#{@token_id}"
     connection = Faraday.new(google_url, request: {
-       open_timeout: 2,   # opening a connection
-        timeout: 5         # waiting for response
-    })
-    #connection.proxy "http://localhost:8485" if ENV['APP_ENV'] == 'development'
-    raw_response = connection.get google_url 
+                               open_timeout: 2, # opening a connection
+                               timeout: 5 # waiting for response
+                             })
+    # connection.proxy "http://localhost:8485" if ENV['APP_ENV'] == 'development'
+    raw_response = connection.get google_url
     return user_not_exist if raw_response.status != 200
-    
+
     Message.new(
-      error: false, 
-      body: profile(JSON.parse(raw_response.body)))
+      error: false,
+      body: profile(JSON.parse(raw_response.body))
+    )
   rescue Faraday::ConnectionFailed
     connection_refused
   end
 
   private
+
   def user_not_exist
-   Message.new(error: true, body: 'User is not exist in Google')
+    Message.new(error: true, body: 'User is not exist in Google')
   end
 
   def connection_refused
