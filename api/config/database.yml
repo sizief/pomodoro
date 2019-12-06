@@ -11,8 +11,8 @@ production:
   encoding: unicode
   database: pomodoro
   pool: 15
-  username: ENV['DATABASE_USERNAME']
-  password: ENV['DATABASE_PASSWORD']
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
   host: localhost
 test:
   adapter: postgresql
