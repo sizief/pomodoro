@@ -14,16 +14,19 @@ A simple POMODORO app. Built with React and Ruby Sinatra.
 ### Deployment
 
 We need two places to host code. 
-- First one is `/srv/pomodoro/api` to host `api.pomodoro.works`. Put [Nginx config](api/config/api.nginx) under `/etc/nginx/sites-available/api.pomodoro.works`. 
+- First one is `/srv/pomodoro/api` to host `api.pomodoro.works`. Put [Nginx config](api/config/api.nginx) under `/etc/nginx/sites-available/api.pomodoro.works`. Use following commands to debug
+  `sudo nginx -t` to check the config file  
+  `sudo tail -f \var\log\nginx\access.log`
 - Copy service config for puma from [here](api/config/api.systemd) and put it to `/etc/systemd/system/pomodoro.service`
 - Use following commands to start, stop and debug service:  
   `systemctl daemon-reload` reload after each change in config file  
   `journalctl -u pomodoro.service -f` to check the service logs  
-  `sudo  systemctl enable` to autostart it on boot
+  `sudo  systemctl enable` to autostart it on boot  
   `sudo systemctl start pomodoro.service`  
   `sudo systemctl stop pomodoro.service`  
   `sudo systemctl status pomodoro.service`  
+- For more info about Ngin x setup check [this post](https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-server-blocks-virtual-hosts-on-ubuntu-16-04).   
+- Install CERTBOT. Renew with `certbot renew`
 - Secon place is for React app which hosted by Nginx as a static web server. It is hosted by Nginx under `/srv/pomodoro/` and the config is [here](app/config/app.nginx) 
-- To restart Nginx: `sudo systemctl restart nginx`. For more info check [this post](https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-server-blocks-virtual-hosts-on-ubuntu-16-04).   
 - Run `npm run build` to build.
 - Don't forget to `mv .env.example .env` both for api and app

@@ -35,6 +35,7 @@ class Login extends Component{
   }
 
   async authenticate(tokenId){
+    console.log(process.env.REACT_APP_API_ENDPOINT)
     const payload = { token_id: tokenId }
     try{
       const response = await axios({
