@@ -3,6 +3,7 @@
 
 require 'date'
 require 'dotenv/load'
+Dotenv.load("#{__dir__}/.env")
 require 'sinatra'
 require 'sinatra/reloader' if development?
 require 'sinatra/activerecord'

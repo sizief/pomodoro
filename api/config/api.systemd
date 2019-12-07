@@ -1,0 +1,15 @@
+[unit]
+Description=Pomodoro service
+Wants=nginx.service
+Requires=postgresql.service
+After=postgresql.service
+
+[Service]
+Type=simple
+User=pomodoro
+Group=pomodoro
+ExecStart=/bin/bash -c 'PATH=/home/pomodoro/.rbenv/shims:/home/pomodoro/.rbenv/bin:$PATH; /srv/pomodoro/api/app.rb'
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
