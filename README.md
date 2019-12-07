@@ -1,88 +1,22 @@
-A simple POMODORO app.
+A simple POMODORO app. Built with React and Ruby Sinatra.
 
-### Deploy and run
+### Development
 
-This project is setup on vpn server. Under the `/var/www/flightnow/pomodoro`. It is hosted by Nginx and the config fot that is in `/etc/nginx/sites-available/flightnow.[i.r]`  
-To restart Nginx: `sudo systemctl restart nginx`. For more info check [this post](https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-server-blocks-virtual-hosts-on-ubuntu-16-04).   
-Run `npm run build` to build.
-
---  
-For development inside the project folder run `tmuxinator start`  
-Api is set at localhost:4000  
-to test the Google Oauth, set pomodoro.ir in /etc/host and add url at https://console.developers.google.com/apis/credentials?project=pomodoro-1574243762652  
-We get token_id from google auth, and then on server side we examine if token_id is valid. 
-[Check this post for installing Postgress](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04)
-And then [here](https://github.com/sizief/cheatsheet/blob/master/postgres.md) to add user and database.
-    
-Create new migration with `bundle exec rake db:create_migration NAME=create_users`  
-Run migrations with `bundle exec rake db:migrate`
-Run Migration for other ENVs `bundle exec rake db:migrate RACK_ENV=test`
-Run to see StoryBook `npm run storybook`
-
-
-
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+- Cd to root of project and run `tmuxinator start`. It will open three `tmux` with three tabs. One for API, one for React front and one for npm development server.   
+- Api is set at localhost:4000  
+- To test the Google Oauth, set any domain you want in /etc/host and add url to [Google](https://console.developers.google.com/apis/credentials?project=pomodoro-1574243762652). Then get `token_id`, and save it to `api/.env`
+- This app uses `POstgres`. Check [this post for installing Postgress](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04). Also don't forget to install `sudo apt install libpq-dev`. And then [here](https://github.com/sizief/cheatsheet/blob/master/postgres.md) to add user and database.
+- Create new migration with `bundle exec rake db:create_migration NAME=create_users`  
+- Run migrations with `bundle exec rake db:migrate`
+- Run Migration for other ENVs `bundle exec rake db:migrate RACK_ENV=test`
+- Run to see StoryBook `npm run storybook`
 
 ### Deployment
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+We need two places to host code. 
+- First one is `/srv/pomodoro/api` to host `api.pomodoro.works`. Put [Nginx config](config/api.nginx) under `/etc/nginx/sites-available/api.pomodoro.works`. 
+- Create service for puma and put it here
+- Secon place is for React app which hosted by Nginx as a static web server. It is hosted by Nginx under `/srv/pomodoro/` and the config is [here](config/app.nginx) 
+- To restart Nginx: `sudo systemctl restart nginx`. For more info check [this post](https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-server-blocks-virtual-hosts-on-ubuntu-16-04).   
+- Run `npm run build` to build.
+- Don't forget to `mv .env.example .env` both for api and app
