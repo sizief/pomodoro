@@ -8,7 +8,7 @@ After=postgresql.service
 Type=simple
 User=pomodoro
 Group=pomodoro
-ExecStart=/bin/bash -c 'PATH=/home/pomodoro/.rbenv/shims:/home/pomodoro/.rbenv/bin:$PATH; /srv/pomodoro/api/app.rb'
+ExecStart=/bin/bash -c 'PATH=/home/pomodoro/.rbenv/shims:/home/pomodoro/.rbenv/bin:$PATH; cd /srv/pomodoro/api; ./app.rb'
 Restart=always
 
 [Install]
