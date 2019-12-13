@@ -1,4 +1,4 @@
-A simple POMODORO app. Built with React and Ruby Sinatra.
+[Pomodoro.works](https://pomodoro.works). Built with React and Ruby Sinatra. 
 
 ### Development
 
