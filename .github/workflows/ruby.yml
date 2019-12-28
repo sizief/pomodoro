@@ -9,12 +9,22 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Set up Ruby 2.5
+    - name: Set up Ruby 2.6.3
       uses: actions/setup-ruby@v1
       with:
-        ruby-version: 2.5.3
+        ruby-version: 2.6.3
+    - name: install Postgress driver
+      run:  sudo apt install postgresql postgresql-contrib libpq-dev
+    - name: setup DB
+      run:  |
+        sudo -u postgres psql -c"CREATE ROLE pomodoro WITH LOGIN ENCRYPTED PASSWORD 'qwerty' SUPERUSER;"
+        sudo -u postgres psql -c"CREATE DATABASE pomodoro_test WITH OWNER pomodoro ENCODING 'UTF8';"
     - name: Build and test with Rake
       run: |
+        cd api
+        export DATABASE_USERNAME=pomodoro 
+        export DATABASE_PASSWORD=qwerty
         gem install bundler
         bundle install --jobs 4 --retry 3
-        bundle exec rake test
+        RACK_ENV=test bundle exec rake db:migrate
+        DATABASE_USERNAME=pomodoro DTABASE_PASSWORD=qwerty bundle exec rake test
