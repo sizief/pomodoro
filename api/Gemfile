@@ -14,8 +14,10 @@ gem 'sinatra-contrib'
 gem 'sinatra-cross_origin'
 
 group :test do
+  gem 'factory_bot' 
   gem 'rack-test'
   gem 'rspec'
   gem 'vcr'
   gem 'webmock'
+  gem 'database_cleaner'
 end

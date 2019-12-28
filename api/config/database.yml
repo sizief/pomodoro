@@ -1,24 +1,20 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: localhost
+  pool: 15
 development:
-  adapter: postgresql
-  encoding: unicode
+  <<: *default
   database: pomodoro
-  pool: 15
   username: <%= ENV['DATABASE_USERNAME'] %>
   password: <%= ENV['DATABASE_PASSWORD'] %>
-  host: localhost
 production:
-  adapter: postgresql
-  encoding: unicode
+  <<: *default
   database: pomodoro
-  pool: 15
   username: <%= ENV['DATABASE_USERNAME'] %>
   password: <%= ENV['DATABASE_PASSWORD'] %>
-  host: localhost
 test:
-  adapter: postgresql
-  encoding: unicode
+  <<: *default
   database: pomodoro_test
-  pool: 15
   username: <%= ENV['DATABASE_USERNAME'] %>
   password: <%= ENV['DATABASE_PASSWORD'] %>
-  host: localhost
