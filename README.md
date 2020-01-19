@@ -30,5 +30,5 @@ We need two places to host code.
 - For more info about Ngin x setup check [this post](https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-server-blocks-virtual-hosts-on-ubuntu-16-04).   
 - Install CERTBOT. Renew with `certbot renew`
 - Secon place is for React app which hosted by Nginx as a static web server. It is hosted by Nginx under `/srv/pomodoro/` and the config is [here](app/config/app.nginx) 
-- Run `npm run build` to build.
+- Check the npm version in `.node_version` and use `asdf global node {version}` and then Run `npm run build` to build.
 - Don't forget to `mv .env.example .env` both for api and app
