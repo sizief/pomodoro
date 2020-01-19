@@ -44,10 +44,14 @@ class Pomodoro extends Component{
       //TODO: try again
     }
   }
-  
-  handleDone() {
+ 
+  playSound() {
     let audio = new Audio('assets/definite.mp3');
     audio.play();
+  }
+
+  handleDone() {
+    this.playSound();
     if (this.context.loggedIn) this.save();
     
     this.setState({counting: false});
@@ -73,6 +77,7 @@ class Pomodoro extends Component{
   }
   
   handleStartCounting(isBreak) {
+    this.playSound();
     this.setState({counting: true, isBreak: isBreak});
   }
   

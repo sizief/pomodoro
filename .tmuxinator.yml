@@ -3,7 +3,7 @@ name: pomodoro
 root: ~/projects/pomodoro
 windows:
   - editor: vim src
-  - api-test: cd api; bundle exec rspec  
-  - bash: 
   - api: cd api; ./app.rb
   - npm: npm start
+  - api-test: cd api; bundle exec rspec  
+  - bash: 

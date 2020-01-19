@@ -6,7 +6,7 @@
 - Cd to root of project and run `tmuxinator start`. It will open a `tmux` session. One for API, one for React front and one for npm development server (and many others for test, bash and etc)   
 - Api is set at localhost:4000  
 - To test the Google Oauth, set any domain you want in /etc/host and add url to [Google](https://console.developers.google.com/apis/credentials?project=pomodoro-1574243762652). Then get `token_id`, and save it to `api/.env`
-- This app uses `POstgres`. Check [this post for installing Postgress](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04). Also don't forget to install `sudo apt install libpq-dev`. And then [here](https://github.com/sizief/cheatsheet/blob/master/postgres.md) to add user and database.
+- This app uses `Postgres`. Check [this post for installing Postgress](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04). Also don't forget to install `sudo apt install libpq-dev`. And then [here](https://github.com/sizief/cheatsheet/blob/master/postgres.md) to add user and database.
 - copy `api/.env.example` to `api/.env` and update the values
 - Create new migration with ` bundle exec rake db:create_migration NAME=create_users`  
 - Run migrations with `bundle exec rake db:migrate`

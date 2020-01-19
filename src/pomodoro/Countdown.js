@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Countdown.scss';
+import _ from 'lodash';
 
 class Countdown extends Component {
   constructor(props) {
@@ -31,8 +32,11 @@ class Countdown extends Component {
   }
 
   counter() {
+    const second = _.padStart((this.state.timer % 60), 2, '0') 
+    const minute = _.padStart(Math.floor((this.state.timer / 60)), 2, '0') 
+
     return (
-      `${Math.floor(this.state.timer / 60)}:${this.state.timer % 60}`
+      `${minute}:${second}`
     );
   }
 
