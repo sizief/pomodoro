@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './index.scss'
 import UserContext from '../context/UserContext'
-import Loading from '../common/loading'
 import { ResponsiveBar } from '@nivo/bar'
 import axios from 'axios';
 
@@ -20,7 +19,7 @@ class History extends Component {
     if (this.state.IsDataAvailable) return false
     this.fetchData().then(
       res => {
-        if (res.status == 200) {
+        if (res.status === 200) {
           this.setState(
             {
               IsDataAvailable: true,

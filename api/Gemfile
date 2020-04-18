@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 
 gem 'dotenv'
-gem 'faraday'
+gem "faraday"
 gem 'pg', '~> 0.18.4'
 gem 'puma', '>= 4.3.1'
 gem 'rack'

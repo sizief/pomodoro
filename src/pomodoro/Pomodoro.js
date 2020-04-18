@@ -29,7 +29,7 @@ class Pomodoro extends Component{
 
   async save(){
     try{
-      const response = await axios({
+      await axios({
 	method: 'post',
         url: `${process.env.REACT_APP_API_ENDPOINT}/pomodoros`,
 	data: JSON.stringify(

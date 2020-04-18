@@ -3,10 +3,11 @@ import GoogleLogin from 'react-google-login'
 import UserContext from './context/UserContext'
 import Loading from './common/loading'
 import axios from 'axios';
+import {apiEndpoint, googleAppId} from './config/Vars'
 
 class Login extends Component{
   static contextType = UserContext
-  
+
   constructor(props, context){
     super(props, context);
     this.state = {
@@ -16,17 +17,17 @@ class Login extends Component{
     this.responseGoogle = this.responseGoogle.bind(this)
     this.updateUserIfAlreadyLoggedIn()
   }
-  
+
   updateUserIfAlreadyLoggedIn(){
     if (localStorage.getItem('access_id')){ //User logged in before
       this.loginUser(
-	localStorage.getItem('given_name'),
+        localStorage.getItem('given_name'),
         localStorage.getItem('access_id')
       )
     }
-  } 
-  
-  
+  }
+
+
   loginUser(given_name, access_id){
     const userCx = this.context
     userCx.setLoggedIn(true)
@@ -35,35 +36,25 @@ class Login extends Component{
   }
 
   async authenticate(tokenId){
-    console.log(process.env.REACT_APP_API_ENDPOINT)
+    console.log(`${apiEndpoint}/users`)
     const payload = { token_id: tokenId }
-    try{
-      const response = await axios({
-	method: 'post',
-        url: `${process.env.REACT_APP_API_ENDPOINT}/users`,
-	data: JSON.stringify(payload)
-      });
-      return response
-    } catch(error){
-      return error.response
-    }
+    const response = await axios({
+      method: 'post',
+      timeout: 3000,
+      url: `${apiEndpoint}/users`,
+      data: JSON.stringify(payload)
+    });
+    return response
   }
 
-  responseGoogle(response){    
+  responseGoogle(response){
     if (response.error || !response.isSignedIn()) { // User did not login
       return false;
     }
-     this.setState({loading: true})
-     this.authenticate(response.tokenId).then(
-       user => 
-	 {
-	   if (typeof(user) !== 'undefined') {
-	     this.setUser(user)
-	   } else { //TODO: proper error handling
-             console.log('api is not responding')
-	   }
-	 }
-     )
+    this.setState({loading: true})
+    this.authenticate(response.tokenId)
+    .then(user => this.setUser(user))
+    .catch(err => console.error(err))
   }
 
   setUser(remoteUser){
@@ -76,7 +67,7 @@ class Login extends Component{
     }
     this.setState({loading: false})
   }
-    
+
   storeUserOnBrowser(user){
     localStorage.setItem('access_id', user.access_id);
     localStorage.setItem('given_name', user.given_name);
@@ -85,30 +76,26 @@ class Login extends Component{
   googleLogin(){ 
     return(
       <div id="loginBox">
-	<GoogleLogin
-          clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+        <GoogleLogin
+          clientId={googleAppId}
           onSuccess={this.responseGoogle}
           onFailure={this.responseGoogle}
-	  render={renderProps => (
+          render={renderProps => (
             <button style={{border:0, color: 'white', background: '#2c2c54'}} onClick={renderProps.onClick} disabled={renderProps.disabled}>
-	      Login
-	    </button>
+            Login
+            </button>
           )}
          />
       </div>
     )
-  } 
-  
+  }
+
   render(){
    const user = this.context
-    if (this.state.loading) {
-      return <Loading color="white"/>
-    }
-    if (user.loggedIn){
-      return user.givenName
-    }else {
-      return this.googleLogin();
-    }
+    if (this.state.loading) return <Loading color="white"/>
+    if (user.loggedIn) return user.givenName
+
+    return this.googleLogin();
   }
 }
 
