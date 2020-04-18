@@ -12,6 +12,7 @@
 - Run migrations with `bundle exec rake db:migrate`
 - Run migration for other ENVs `bundle exec rake db:migrate RACK_ENV=test`
 - Run to see StoryBook `npm run storybook`
+- Run `yarn` to install dependencies and `yarn upgarde` to upgarde all dependencies.
 
 ### Deployment
 
