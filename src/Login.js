@@ -53,8 +53,8 @@ class Login extends Component{
     }
     this.setState({loading: true})
     this.authenticate(response.tokenId)
-    .then(user => this.setUser(user))
-    .catch(err => console.error(err))
+      .then(user => this.setUser(user))
+      .catch(err => console.error(err))
   }
 
   setUser(remoteUser){
