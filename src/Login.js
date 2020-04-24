@@ -1,38 +1,28 @@
 import React, {Component} from 'react';
 import GoogleLogin from 'react-google-login'
-import UserContext from './context/UserContext'
 import Loading from './common/loading'
 import axios from 'axios';
 import {apiEndpoint, googleAppId} from './config/Vars'
+import user from './stores/User'
+import { observer } from "mobx-react"
 
-class Login extends Component{
-  static contextType = UserContext
+const Login = observer(class Login extends Component{
 
-  constructor(props, context){
-    super(props, context);
-    this.state = {
-      loading: false,
-    }
-    this.loginUser = this.loginUser.bind(this)
+  constructor(props){
+    super(props);
+    this.state = {loading: false}
+    this.login = this.login.bind(this)
     this.responseGoogle = this.responseGoogle.bind(this)
     this.updateUserIfAlreadyLoggedIn()
   }
 
   updateUserIfAlreadyLoggedIn(){
     if (localStorage.getItem('access_id')){ //User logged in before
-      this.loginUser(
+      this.login(
         localStorage.getItem('given_name'),
         localStorage.getItem('access_id')
       )
     }
-  }
-
-
-  loginUser(given_name, access_id){
-    const userCx = this.context
-    userCx.setLoggedIn(true)
-    userCx.setGivenName(given_name)
-    userCx.setAccessId(access_id)  
   }
 
   async authenticate(tokenId){
@@ -60,12 +50,16 @@ class Login extends Component{
   setUser(remoteUser){
     if (remoteUser.status === 200){
       this.storeUserOnBrowser(remoteUser.data)
-      this.loginUser(
+      this.login(
         remoteUser.data.given_name,
         remoteUser.data.access_id
       )
     }
     this.setState({loading: false})
+  }
+
+  login(givenName, accessId){
+    user.login(givenName, accessId)
   }
 
   storeUserOnBrowser(user){
@@ -90,13 +84,29 @@ class Login extends Component{
     )
   }
 
+  logout(){
+    localStorage.removeItem('access_id')
+    localStorage.removeItem('given_name')
+    user.logout()
+  }
+
+  loggedInBar(){
+    return (
+      <div id="loginBox">
+        <div>
+          { user.givenName } |
+          <span style={{paddingLeft: 2}} onClick={this.logout}>exit</span>
+        </div>
+      </div>
+    )
+  }
+
   render(){
-   const user = this.context
     if (this.state.loading) return <Loading color="white"/>
-    if (user.loggedIn) return user.givenName
+    if (user.isLogin) return this.loggedInBar()
 
     return this.googleLogin();
   }
 }
-
+)
 export default Login; 

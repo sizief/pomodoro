@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import './index.scss'
-import UserContext from '../context/UserContext'
+import user from '../stores/User'
 import { ResponsiveBar } from '@nivo/bar'
 import axios from 'axios';
 
 class History extends Component {
-  static contextType = UserContext
-  
-  constructor(props,context){
-    super(props, context);
+
+  constructor(props){
+    super(props);
     this.state ={
       IsDataAvailable: false
     }
@@ -36,9 +35,9 @@ class History extends Component {
   async fetchData(){
     try{
       const response = await axios({
-	method: 'get',
+        method: 'get',
         url: `${process.env.REACT_APP_API_ENDPOINT}/pomodoros`,
-	headers: {'Authorization': this.context.accessId}
+        headers: {'Authorization': user.accessId}
       });
       return response
     } catch(error){
@@ -110,9 +109,9 @@ class History extends Component {
 
   render() {
     let body;
-    if (this.context.loggedIn){
+    if (user.isLogin){
       this.refreshData();
-      body = this.state.IsDataAvailable ? 
+      body = this.state.IsDataAvailable ?
              <div id="chart">{this.renderBar()}</div> :
              "Please wait"
     } else {
@@ -123,7 +122,7 @@ class History extends Component {
 
     return (
       <div id="history">
-	{body}
+        {body}
       </div>
     );
   }

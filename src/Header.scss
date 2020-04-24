@@ -36,11 +36,10 @@
     color: white;
 
     #loginBox {
-      button {
+      button, div {
         cursor: pointer;
-        padding: 0.4rem 2rem;
-	background-color: red;
-	font-size: 1rem;
+        padding: 0.4rem 0.8rem;
+        font-size: 1rem;
         color: $color4 !important;
       }
     }
