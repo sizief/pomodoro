@@ -32,8 +32,8 @@ class Countdown extends Component {
   }
 
   counter() {
-    const second = _.padStart((this.state.timer % 60), 2, '0') 
-    const minute = _.padStart(Math.floor((this.state.timer / 60)), 2, '0') 
+    const second = _.padStart((this.state.timer % 60), 2, '0');
+    const minute = _.padStart(Math.floor((this.state.timer / 60)), 2, '0');
 
     return (
       `${minute}:${second}`

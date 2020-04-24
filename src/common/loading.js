@@ -12,7 +12,7 @@ export default class Loading extends Component {
         viewBox="0 0 100 100"
         enableBackground="new 0 0 0 0"
         xmlSpace="preserve"
-        style={{ width: `${30}px`}}
+        style={{ width: `${30}px` }}
       >
         <circle fill={this.props.color} stroke="none" cx="6" cy="50" r="6">
           <animate

@@ -12,13 +12,13 @@ class CountingDialogue extends Component {
         <div className="buttons">
           <div className="button" onClick={this.selection.bind(this, 'work')}>
             <div className="number">{this.props.workTime}</div>
-	      minutes work
+            minutes work
           </div>
 
           <div className="button" onClick={this.selection.bind(this, 'break')}>
             <div className="number">{this.props.breakTime}</div>
             {' '}
-minutes break
+            minutes break
           </div>
         </div>
       </div>

@@ -6,13 +6,14 @@
 - Cd to root of project and run `tmuxinator start`. It will open a `tmux` session. One for API, one for React front and one for npm development server (and many others for test, bash and etc)   
 - Api is set at localhost:4000  
 - Add `127.0.0.1	dev.pomodoro.works 	api.pomodoro.works` to `\etc\hosts`. (dev url is already added to [Google](https://console.developers.google.com/apis/credentials?project=pomodoro-1574243762652)). Then get `token_id` from the google console, and save it to `api/.env`
-- This app uses `POstgres`. Check [this post for installing Postgress](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04). Also don't forget to install `sudo apt install libpq-dev`. And then [here](https://github.com/sizief/cheatsheet/blob/master/postgres.md) to add user and database.
+- This app uses `Postgres`. Check [this post for installing Postgress](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04). Also don't forget to install `sudo apt install libpq-dev`. And then [here](https://github.com/sizief/cheatsheet/blob/master/postgres.md) to add user and database.
 - copy `api/.env.example` to `api/.env` and update the values
 - Create new migration with ` bundle exec rake db:create_migration NAME=create_users`  
 - Run migrations with `bundle exec rake db:migrate`
 - Run migration for other ENVs `bundle exec rake db:migrate RACK_ENV=test`
 - Run to see StoryBook `npm run storybook`
 - Run `yarn` to install dependencies and `yarn upgarde` to upgarde all dependencies.
+- Run `npx eslint [file_name] --fix` to autofix
 
 ### Deployment
 

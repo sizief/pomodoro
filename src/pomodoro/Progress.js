@@ -7,7 +7,7 @@ class Progress extends Component {
       <div id="progress">
         <div className="number">
           {this.props.numberOfDone}
-/4
+          /4
         </div>
         <div className="title">Pomodoro</div>
       </div>

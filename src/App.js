@@ -4,7 +4,7 @@ import Header from './Header';
 import './App.scss';
 
 class App extends Component {
-  constructor(){
+  constructor() {
     super();
   }
 
