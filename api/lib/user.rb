@@ -19,6 +19,6 @@ class User < ActiveRecord::Base
   end
 
   def create_project
-    projects.create(name: 'general')
+    self.projects.create(name: 'general')
   end
 end

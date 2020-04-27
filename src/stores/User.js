@@ -17,6 +17,7 @@ class User {
 
   logout(){
     this.loggedIn = false
+    this.givenName = 'default'
   }
 
 }
@@ -29,4 +30,5 @@ decorate(User, {
   logout: action
 })
 
-export default new User()
+const user = new User()
+export default user

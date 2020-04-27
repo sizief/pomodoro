@@ -15,6 +15,7 @@ GEM
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     backports (3.15.0)
+    coderay (1.1.2)
     concurrent-ruby (1.1.5)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
@@ -28,12 +29,16 @@ GEM
     hashdiff (1.0.0)
     i18n (1.7.0)
       concurrent-ruby (~> 1.0)
+    method_source (1.0.0)
     minitest (5.13.0)
     multi_json (1.14.1)
     multipart-post (2.1.1)
     mustermann (1.0.3)
     nio4r (2.5.2)
     pg (0.18.4)
+    pry (0.13.1)
+      coderay (~> 1.1)
+      method_source (~> 1.0)
     public_suffix (4.0.2)
     puma (4.3.3)
       nio4r (~> 2.0)
@@ -93,6 +98,7 @@ DEPENDENCIES
   factory_bot
   faraday
   pg (~> 0.18.4)
+  pry (~> 0.13.1)
   puma (>= 4.3.3)
   rack
   rack-test

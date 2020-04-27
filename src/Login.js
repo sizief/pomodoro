@@ -25,7 +25,6 @@ const Login = observer(class Login extends Component {
   }
 
   async authenticate(tokenId) {
-    console.log(`${apiEndpoint}/users`);
     const payload = { token_id: tokenId };
     const response = await axios({
       method: 'post',
@@ -109,4 +108,5 @@ const Login = observer(class Login extends Component {
     return this.googleLogin();
   }
 });
+
 export default Login;

@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
-
+require 'pry'
 require 'date'
 require 'dotenv/load'
 Dotenv.load("#{__dir__}/.env")
@@ -15,6 +15,7 @@ before do
   pass if ['/users', '/health-check'].include? request.path_info
   pass if request.env['REQUEST_METHOD'] == 'OPTIONS'
   halt 401 if request.env['HTTP_AUTHORIZATION'].nil?
+
   @user = User.find_by(access_id: request.env['HTTP_AUTHORIZATION'])
   halt 401 if @user.nil?
 end
