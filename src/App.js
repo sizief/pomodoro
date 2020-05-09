@@ -4,10 +4,6 @@ import Header from './Header';
 import './App.scss';
 
 class App extends Component {
-  constructor() {
-    super();
-  }
-
   render() {
     return (
       <div id="app">

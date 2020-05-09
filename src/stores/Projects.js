@@ -1,4 +1,4 @@
-import { observable, decorate, action, computed } from "mobx";
+import { observable, decorate, action } from "mobx";
 import { apiEndpoint } from '../config/Vars';
 import user from './User'
 import axios from 'axios';
@@ -20,7 +20,7 @@ class Projects {
 
   async addProject(name) {
     try {
-      const response = await axios({
+      await axios({
         method: 'post',
         url: `${apiEndpoint}/projects`,
         headers: { Authorization: user.accessId },
@@ -33,19 +33,38 @@ class Projects {
     }
   }
 
+  async removeProject(id) {
+    try {
+      await axios({
+        method: 'delete',
+        url: `${apiEndpoint}/projects/${id}`,
+        headers: { Authorization: user.accessId },
+      })
+    } catch (error){
+      console.log(error)
+    }
+  }
+
   fetch(){
     this.fetchProjects()
   }
 
-  add(name) {
-    this.addProject(name)
-    this.fetchProjects()
+  async add(name) {
+    await this.addProject(name)
+    this.fetch()
+  }
+
+  remove(id) {
+    // Education tip: you can wait for fulfiled by await or then
+    this.removeProject(id)
+    .then(() => this.fetch())
   }
 }
 
 decorate(Projects, {
   list: observable,
-  add: action
+  add: action,
+  remove: action
 })
 
 const projects = new Projects()

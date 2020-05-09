@@ -14,7 +14,8 @@ gem 'sinatra-contrib'
 gem 'sinatra-cross_origin'
 
 group :development do
-  gem 'pry', '~> 0.13.1' 
+  gem 'pry', '~> 0.13.1'
+  gem 'pry-byebug'
 end
 
 group :test do

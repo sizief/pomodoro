@@ -18,9 +18,12 @@
   }
   .nav {
     display: inline-block;
-    margin-left: 1rem;
+    margin-left: 0.6rem;
+    .item {
+      padding-left: 0.5rem;
+    } 
     a {
-      color: $color4;
+        color: $color4;
     }
   }
   .status {

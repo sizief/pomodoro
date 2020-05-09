@@ -11,9 +11,11 @@ require_relative './lib/pomodoro'
 
 before do
   headers 'Access-Control-Allow-Origin' => '*'
+
   # Answer following routes even if AUTH is not available
   pass if ['/users', '/health-check'].include? request.path_info
   pass if request.env['REQUEST_METHOD'] == 'OPTIONS'
+
   halt 401 if request.env['HTTP_AUTHORIZATION'].nil?
 
   @user = User.find_by(access_id: request.env['HTTP_AUTHORIZATION'])
@@ -22,8 +24,8 @@ end
 
 options '*' do
   headers 'Allow' => 'GET, PUT, POST, DELETE, OPTIONS'
+  headers 'Access-Control-Allow-Methods' => 'GET, PUT, POST, DELETE, OPTIONS'
   headers 'Access-Control-Allow-Headers' => 'Authorization, Content-Type, Accept'
-  headers 'Access-Control-Allow-Origin' => '*'
   200
 end
 
@@ -80,6 +82,15 @@ end
 #  Array<Project>
 get '/projects' do
   @user.projects.select(:id, :name, :color).to_json
+end
+
+# == Header
+#  authurization <String>
+delete '/projects/:id' do
+  project = @user.projects.find(params[:id])
+  project.destroy
+rescue => e
+  halt 400, e.to_json
 end
 
 # == Header

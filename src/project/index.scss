@@ -4,5 +4,28 @@
   height: 98%;
   width: 100%;
   padding-top: 2%;
-}
 
+  #main {
+    padding: 2em;
+    color: $color1;
+
+    .addInput{
+      margin: 0 1rem;
+      height: 1.5rem;
+    }
+    .addButton{
+      height: 1.5rem;
+    }
+  }
+  #list {
+    padding: 2em;
+    color: $color1;
+
+    .remove {
+      font-size: 0.7rem;
+      color: $color2;
+      padding-left: 0.5rem;
+      cursor: pointer;
+    }
+  }
+}

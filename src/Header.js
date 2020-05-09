@@ -4,15 +4,6 @@ import './Header.scss';
 import Login from './Login';
 
 class Header extends Component {
-  status() {
-    if (!this.props.counting) return;
-
-    if (this.props.isBreak) {
-      return <div className="status">Rest!</div>;
-    }
-    return <div className="status">Focus!</div>;
-  }
-
   render() {
     return (
       <div className="header">
@@ -23,12 +14,12 @@ class Header extends Component {
           </Link>
         </div>
         <div className="nav">
-          <Link to="history">History</Link>
+          <Link className='item' to="history">History</Link> 
+          <Link className='item' to="project">Projects</Link>
         </div>
         <div className="login">
           <Login />
         </div>
-        {this.status()}
       </div>
     );
   }

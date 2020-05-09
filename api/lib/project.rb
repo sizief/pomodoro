@@ -7,8 +7,15 @@ class Project < ActiveRecord::Base
   belongs_to :user
   has_many :pomodoros, dependent: :destroy
   before_create :set_color
+  before_destroy :can_destroy?
+
+  DEFAULT_PROJECT = 'general'
 
   private
+
+  def can_destroy?
+    raise('Can not delete default project') if self.name == DEFAULT_PROJECT
+  end
 
   def set_color
     self.color = pick_color
