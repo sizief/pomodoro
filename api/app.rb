@@ -10,7 +10,7 @@ require 'sinatra/activerecord'
 require_relative './lib/pomodoro'
 
 before do
-  headers 'Access-Control-Allow-Origin' => '*'
+  headers 'Access-Control-Allow-Origin' => ENV['HOST']
 
   # Answer following routes even if AUTH is not available
   pass if ['/users', '/health-check'].include? request.path_info

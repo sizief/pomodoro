@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Countdown.scss';
 import _ from 'lodash';
+import Projects from './ProjectDropDown'
 
 class Countdown extends Component {
   constructor(props) {
@@ -53,7 +54,8 @@ class Countdown extends Component {
     return (
       <div className="control">
         <span onClick={this.restart.bind(this)}>Restart | </span>
-        <span onClick={this.pause.bind(this)}>{phrase}</span>
+        <span onClick={this.pause.bind(this)}>{phrase} | </span>
+        <span><Projects/></span>
       </div>
     );
   }

@@ -3,6 +3,8 @@ import './index.scss';
 import { ResponsiveBar } from '@nivo/bar';
 import axios from 'axios';
 import user from '../stores/User';
+import LoginInvite from '../loginInvite';
+import { apiEndpoint } from '../config/Vars';
 
 class History extends Component {
   constructor(props) {
@@ -35,7 +37,7 @@ class History extends Component {
     try {
       const response = await axios({
         method: 'get',
-        url: `${process.env.REACT_APP_API_ENDPOINT}/pomodoros`,
+        url: `${apiEndpoint}/pomodoros`,
         headers: { Authorization: user.accessId },
       });
       return response;
@@ -109,25 +111,17 @@ class History extends Component {
   }
 
   render() {
-    let body;
-    if (user.isLogin) {
-      this.refreshData();
-      body = this.state.IsDataAvailable
-        ? <div id="chart">{this.renderBar()}</div>
-        : 'Please wait';
-    } else {
-      body = (
-        <div id="not-login">
-          Hey! You need to log in to store and see your activity
-        </div>
-      );
-    }
+    if (!user.isLogin) return <LoginInvite/>
 
+    this.refreshData();
     return (
       <div id="history">
-        {body}
+        { this.state.IsDataAvailable ?
+          <div id="chart">{this.renderBar()}</div> :
+          'Please wait'
+        }
       </div>
-    );
+    )
   }
 }
 

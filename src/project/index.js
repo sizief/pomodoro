@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import projects from '../stores/Projects';
 import './index.scss';
+import LoginInvite from '../loginInvite';
+import user from '../stores/User';
+import { defaultProjectName } from '../config/Vars';
 
 const Project = observer(class Project extends Component {
   constructor(props) {
@@ -56,8 +59,7 @@ const Project = observer(class Project extends Component {
   }
 
   renderRemove(project) {
-    // TODO: get the default project name from API
-    if (project.name === 'general') return
+    if (project.name === defaultProjectName) return
     if (this.state.removedProjects.includes(project.id))
       return <span className='remove'>removing...</span>
 
@@ -72,6 +74,8 @@ const Project = observer(class Project extends Component {
   }
 
   render() {
+    if (!user.isLogin) return <LoginInvite/>
+
     return (
       <div id="project">
         <div id='main'>

@@ -3,9 +3,10 @@ import { apiEndpoint } from '../config/Vars';
 import user from './User'
 import axios from 'axios';
 import Project from './models/project'
+import { defaultProjectName } from '../config/Vars';
 
 class Projects {
-  list = []
+  list = [new Project({name: defaultProjectName, id: 0})]
   userProject = user
 
   async fetchProjects() {
