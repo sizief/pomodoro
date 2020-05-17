@@ -4,12 +4,14 @@ import _ from 'lodash';
 import Projects from './ProjectDropDown'
 
 class Countdown extends Component {
+  selectedProjectId = 0
   constructor(props) {
     super(props);
     this.state = {
       timer: props.seconds,
       counting: true,
     };
+    this.onProjectChange = this.onProjectChange.bind(this);
   }
 
   componentDidMount() {
@@ -28,7 +30,7 @@ class Countdown extends Component {
     if (this.state.timer > 0) {
       this.setState({ timer: this.state.timer - 1 });
     } else {
-      this.props.onDone();
+      this.props.onDone(this.selectedProjectId);
     }
   }
 
@@ -49,13 +51,17 @@ class Countdown extends Component {
     this.setState({ timer: this.props.seconds });
   }
 
+  onProjectChange(projectId){
+    this.selectedProjectId = projectId
+  }
+
   controls() {
     const phrase = this.state.counting ? 'Pause' : 'Resume';
     return (
       <div className="control">
         <span onClick={this.restart.bind(this)}>Restart | </span>
         <span onClick={this.pause.bind(this)}>{phrase} | </span>
-        <span><Projects/></span>
+        <span><Projects onChange={this.onProjectChange}/></span>
       </div>
     );
   }

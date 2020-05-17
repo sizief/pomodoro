@@ -5,6 +5,19 @@
   width: 100%;
   padding-top: 2%;
 
+  table {
+    color: $color2;
+    margin: auto;
+    padding: 2em;
+  }
+  td {
+    padding: 0.8em;
+  }
+  td.title {
+    background-color: $color3
+  }
+
+
   #chart {
     width: 80%;
     height: 80%;

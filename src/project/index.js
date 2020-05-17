@@ -11,20 +11,19 @@ const Project = observer(class Project extends Component {
     super(props);
     projects.fetch();
     this.state = {
-      loading: false,
       removedProjects: []
     }
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   submitButton() {
-    const value = this.state.loading ? '...' : 'Add'
+    const value = projects.loading ? '...' : 'Add'
     return (
       <input
         type="submit"
         value={value}
         className='addButton'
-        disabled={this.state.loading}
+        disabled={projects.loading}
       />
     )
   }
@@ -45,12 +44,8 @@ const Project = observer(class Project extends Component {
     event.preventDefault()
     const name = event.target[0].value
     event.target[0].value = '';
-    this.setState({loading: true})
 
     projects.add(name)
-    .then(()=> { 
-      this.setState({loading: false})
-    })
   }
 
   handleRemove(projectId) {

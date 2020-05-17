@@ -4,16 +4,11 @@ import Countdown from './Countdown';
 import Progress from './Progress';
 import Total from './Total';
 import CountingDialogue from './CountingDialogue';
-import UserContext from '../context/UserContext'
-import axios from 'axios';
-import moment from 'moment';
-import { apiEndpoint } from '../config/Vars';
+import user from '../stores/User'
+import pomodoros from '../stores/Pomodoros'
+import { workTimeDuration, breakTimeDuration } from '../config/Vars';
 
 class Pomodoro extends Component{
-  static contextType = UserContext
-  BREAK_TIME = 5;
-  WORK_TIME = 25;
-
   constructor(props){
     super();
     this.state = {
@@ -28,22 +23,8 @@ class Pomodoro extends Component{
     this.handleStartCounting = this.handleStartCounting.bind(this);
   }
 
-  async save(){
-    try{
-      await axios({
-        method: 'post',
-        url: `${apiEndpoint}/pomodoros`,
-        data: JSON.stringify(
-          {
-            project_id: 'default',
-            completed_at: moment().format("YYYY-MM-DD")
-          }
-        ),
-        headers: {'Authorization': this.context.accessId}
-      });
-    } catch(error){
-      //TODO: try again
-    }
+  async save(projectId){
+    pomodoros.add(projectId)
   }
 
   playSound() {
@@ -51,9 +32,9 @@ class Pomodoro extends Component{
     audio.play();
   }
 
-  handleDone() {
+  handleDone(projectId) {
     this.playSound();
-    if (this.context.loggedIn) this.save();
+    if (user.isLogin) this.save(projectId);
 
     this.setState({counting: false});
 
@@ -83,7 +64,7 @@ class Pomodoro extends Component{
   }
 
   topElement() {
-    const seconds = this.state.isBreak ? this.BREAK_TIME : this.WORK_TIME;
+    const seconds = this.state.isBreak ? breakTimeDuration : workTimeDuration
     if (this.state.counting){
       return (
         <Countdown
@@ -96,8 +77,8 @@ class Pomodoro extends Component{
     return (
       <CountingDialogue
         onStartCounting = {this.handleStartCounting}
-        workTime = {this.WORK_TIME}
-        breakTime = {this.BREAK_TIME}
+        workTime = {workTimeDuration}
+        breakTime = {breakTimeDuration}
         firstTime = {this.state.firstTime}
       />
     )

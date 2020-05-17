@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
+import { observer } from 'mobx-react';
 import './index.scss';
 import { ResponsiveBar } from '@nivo/bar';
-import axios from 'axios';
 import user from '../stores/User';
 import LoginInvite from '../loginInvite';
-import { apiEndpoint } from '../config/Vars';
+import Pomodoros from '../stores/Pomodoros'
 
-class History extends Component {
+const History = observer(class History extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      IsDataAvailable: false,
-    };
-    this.fetchData = this.fetchData.bind(this);
+    Pomodoros.fetch()
   }
 
   refreshData() {
@@ -33,18 +30,6 @@ class History extends Component {
     );
   }
 
-  async fetchData() {
-    try {
-      const response = await axios({
-        method: 'get',
-        url: `${apiEndpoint}/pomodoros`,
-        headers: { Authorization: user.accessId },
-      });
-      return response;
-    } catch (error) {
-      return error.response;
-    }
-  }
 
   renderBar() {
     return (
@@ -110,19 +95,49 @@ class History extends Component {
     );
   }
 
+  renderTitle(){
+    return (
+      <thead>
+        <tr>
+          <td className='title'>ID</td>
+          <td className='title'>Project Name</td>
+          <td className='title'>Time</td>
+        </tr>
+      </thead>
+    )
+  }
+
+  renderTable() {
+    return (
+      <table>
+        { this.renderTitle() }
+        <tbody>
+          { Pomodoros.list.map(
+            (pomodoro) =>
+              <tr key={pomodoro.id}>
+                <td>{pomodoro.id}</td>
+                <td>{pomodoro.projectName}</td>
+                <td>{pomodoro.date}</td>
+              </tr>
+          )}
+        </tbody>
+      </table>
+    )
+  }
+
   render() {
     if (!user.isLogin) return <LoginInvite/>
 
-    this.refreshData();
-    return (
+   return (
       <div id="history">
-        { this.state.IsDataAvailable ?
-          <div id="chart">{this.renderBar()}</div> :
-          'Please wait'
+        { Pomodoros.loading ?
+          'loading data...' :
+          this.renderTable()
+          //<div id="chart">{this.renderBar()}</div> :
         }
       </div>
     )
   }
-}
+});
 
 export default History;

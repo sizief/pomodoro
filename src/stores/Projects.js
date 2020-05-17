@@ -4,66 +4,67 @@ import user from './User'
 import axios from 'axios';
 import Project from './models/project'
 import { defaultProjectName } from '../config/Vars';
+import Base from './Base'
 
-class Projects {
+class Projects extends Base{
   list = [new Project({name: defaultProjectName, id: 0})]
-  userProject = user
-
-  async fetchProjects() {
-    const response = await axios({
-      method: 'get',
-      url: `${apiEndpoint}/projects`,
-      headers: { Authorization: user.accessId },
-    })
-
-    this.list = response.data.map(projectData => new Project(projectData))
-  }
-
-  async addProject(name) {
-    try {
-      await axios({
-        method: 'post',
-        url: `${apiEndpoint}/projects`,
-        headers: { Authorization: user.accessId },
-        data: {
-          name: name
-        }
-      })
-    } catch (error){
-      console.log(error)
-    }
-  }
-
-  async removeProject(id) {
-    try {
-      await axios({
-        method: 'delete',
-        url: `${apiEndpoint}/projects/${id}`,
-        headers: { Authorization: user.accessId },
-      })
-    } catch (error){
-      console.log(error)
-    }
-  }
-
-  fetch(){
-    this.fetchProjects()
-  }
 
   async add(name) {
-    await this.addProject(name)
+    await this._addProject(name)
     this.fetch()
   }
 
-  remove(id) {
-    // Education tip: you can wait for fulfiled by await or then
-    this.removeProject(id)
-    .then(() => this.fetch())
+  async remove(id) {
+    await this._removeProject(id)
+    this.fetch()
   }
+
+  fetch() {
+    super.request(
+      async () => {
+        const response = await axios({
+          method: 'get',
+          url: `${apiEndpoint}/projects`,
+          headers: { Authorization: user.accessId },
+        })
+
+        this.list = response.data.map(projectData => new Project(projectData))
+      }
+    )
+  }
+
+  async _addProject(name) {
+    await super.request(
+      async () => {
+        await axios({
+          method: 'post',
+          url: `${apiEndpoint}/projects`,
+          headers: { Authorization: user.accessId },
+          data: {
+            name: name
+          }
+        })
+      }
+    )
+  }
+
+  async _removeProject(id) {
+    await super.request(
+      async () => {
+        await axios({
+          method: 'delete',
+          url: `${apiEndpoint}/projects/${id}`,
+          headers: { Authorization: user.accessId },
+        })
+      }
+    )
+  }
+
 }
 
 decorate(Projects, {
   list: observable,
+  loading: observable,
   add: action,
   remove: action
 })

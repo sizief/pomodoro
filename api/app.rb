@@ -97,19 +97,15 @@ end
 #  authurization <String>
 # == Parameters:
 #  project_id <String>
-#  completed_at <Date> 2019-12-20
 post '/pomodoros' do
   payload = permit(
     JSON.parse(
       request.body.read,
       symbolize_names: true
-    ), %i[project_id completed_at]
+    ), %i[project_id]
   )
 
   halt 400, 'project_id is not provided' if payload[:project_id].nil?
-  if payload[:project_id] == 'default'
-    payload[:project_id] = @user.projects.first.id
-  end
   pomodoro = @user.projects.find(
                payload[:project_id]
              ).pomodoros.create(payload)
@@ -118,7 +114,7 @@ post '/pomodoros' do
 rescue JSON::ParserError
   halt 400, 'Payload is not a valid JSON'
 rescue ActiveRecord::RecordNotFound
-  halt 400, 'project does not exists'
+  halt 400, 'project is not exists'
 end
 
 # == Header
@@ -126,6 +122,15 @@ end
 # == Returns
 #  Array<Pomodoro>
 get '/pomodoros' do
+  PomodoroPresenter.new(@user).call.to_json
+end
+
+# == Header
+#  authurization <String>
+# == Returns
+#  Array<{completed_at: Date, project_name: number of pomodoro, project_color: color_string }>
+#TODO: this is not working, we remove completed_at, update this
+get '/pomodoros_grouped' do
   result = {pomodoros: [], projects: []}
   (-7..0).each do |offset|
     date = Date.today+offset

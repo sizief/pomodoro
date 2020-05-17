@@ -2,6 +2,7 @@
 
 class Project < ActiveRecord::Base
   validates_presence_of :name
+  #TODO: check name for valid chars
   validates_presence_of :user
   validates :name, uniqueness: true
   belongs_to :user
