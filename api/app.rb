@@ -9,6 +9,8 @@ require 'sinatra/reloader' if development?
 require 'sinatra/activerecord'
 require_relative './lib/pomodoro'
 
+set :bind, '0.0.0.0'
+
 before do
   headers 'Access-Control-Allow-Origin' => ENV['HOST']
 
@@ -148,5 +150,7 @@ get '/pomodoros_grouped' do
 end
 
 get '/health-check' do
-  'ok'
+  {server_up: true, database_connection: User.count>=0}.to_json
+rescue PG::ConnectionBad
+  {server_up: true, database_connection: false}.to_json
 end
