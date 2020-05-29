@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ "$ENTRYPOINT" = "app" ]
+if [[ -z "$ENTRYPOINT" || "$ENTRYPOINT" = "app" ]]
 then
   bundle exec rake db:migrate
   bundle exec ruby app.rb

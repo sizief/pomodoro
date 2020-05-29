@@ -12,19 +12,32 @@ services:
         interval: 2s
         timeout: 30s
         retries: 15
-  app:
+  api:
     volumes:
       - ./api:/var/www/pomodoro
-    build: 
+    build:
       context: ./api
     links:
       - db:db
     ports:
-      - 8080:4000
+      - 4000:4000
     depends_on:
       db:
         condition: service_healthy
     environment:
       ENTRYPOINT: app
+    tty: true
+    stdin_open: true
+  app:
+    volumes:
+      - ./app:/var/www/pomodoro
+    build:
+      context: ./app
+    ports:
+      - 3000:3000
+    depends_on:
+      - api
+    environment:
+      ENTRYPOINT: development
     tty: true
     stdin_open: true

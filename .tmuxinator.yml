@@ -2,8 +2,6 @@
 name: pomodoro
 root: ~/projects/pomodoro
 windows:
-  - api: cd api; ./app.rb
-  - api-test: cd api; bundle exec rspec
-  - npm: cd app; npm start
+  - docker: docker-compose up
   - editor: vim .
   - bash:
