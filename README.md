@@ -23,5 +23,3 @@ Now you can visit `dev.pomodoro.works:3000` and it should be working fine.
 ### TODO
 - SSl
 - remote uris are not working
-- remove storybook
-- remove nivou

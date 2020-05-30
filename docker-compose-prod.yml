@@ -30,8 +30,6 @@ services:
         timeout: 30s
         retries: 15
   api:
-    volumes:
-      - ./api:/var/www/pomodoro
     build:
       context: ./api
     links:
@@ -45,7 +43,7 @@ services:
     stdin_open: true
   app_build:
     volumes:
-      - ./app:/var/www/pomodoro
+      - ./app/build:/var/www/pomodoro/build
     build:
       context: ./app
       dockerfile: Dockerfile_production_build
