@@ -1,0 +1,43 @@
+version: '2.1'
+services:
+  db:
+    image: postgres:9.4.5
+    env_file:
+      - ./api/.env.dev
+    volumes:
+      - /var/lib/postgresql/9.5/main:/var/lib/postgresql/data
+    healthcheck:
+        test: ["CMD-SHELL", "psql -h localhost -p 5432 -U postgres -v ON_ERROR_STOP=1 -c 'select version()' &> /dev/null"]
+        test: ["CMD-SHELL", "pg_isready -U postgres"] #Are you really up?
+        interval: 2s
+        timeout: 30s
+        retries: 15
+  api:
+    volumes:
+      - ./api:/var/www/pomodoro
+    build:
+      context: ./api
+    links:
+      - db:db
+    ports:
+      - 4000:4000
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - ./api/.env.dev
+    tty: true
+    stdin_open: true
+  app:
+    volumes:
+      - ./app:/var/www/pomodoro
+    build:
+      context: ./app
+    ports:
+     - 3000:3000
+    depends_on:
+      - api
+    env_file:
+      - ./app/.env.dev
+    tty: true
+    stdin_open: true

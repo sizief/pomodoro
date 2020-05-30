@@ -2,6 +2,6 @@
 name: pomodoro
 root: ~/projects/pomodoro
 windows:
-  - docker: docker-compose up
+  - docker: docker-compose -f docker-compose-dev.yml up
   - editor: vim .
   - bash:

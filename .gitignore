@@ -12,9 +12,9 @@ app/node_modules
 app/build
 
 # misc
-./api/.env
+./api/.env.prod
 .env
-/api/.env
+./app/.env.prod
 .DS_Store
 .env.local
 .env.development.local

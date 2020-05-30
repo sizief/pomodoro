@@ -1,5 +1,18 @@
 version: '2.1'
 services:
+  webserver:
+    image: nginx:alpine
+    container_name: webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+    links:
+      - api:api
+      - app:app
   db:
     image: postgres:9.4.5
     env_file:
@@ -19,13 +32,12 @@ services:
       context: ./api
     links:
       - db:db
-    ports:
-      - 4000:4000
     depends_on:
       db:
         condition: service_healthy
     environment:
-      ENTRYPOINT: app
+      - HOST=http://dev.pomodoro.works
+      - ENTRYPOINT=app
     tty: true
     stdin_open: true
   app:
@@ -33,11 +45,10 @@ services:
       - ./app:/var/www/pomodoro
     build:
       context: ./app
-    ports:
-      - 3000:3000
     depends_on:
       - api
     environment:
-      ENTRYPOINT: development
+      - REACT_APP_API_ENDPOINT=http://dev-api.pomodoro.works
+      - ENTRYPOINT=development
     tty: true
     stdin_open: true
