@@ -73,7 +73,7 @@ const Login = observer(class Login extends Component {
           onSuccess={this.responseGoogle}
           onFailure={this.responseGoogle}
           render={(renderProps) => (
-            <button style={{ border: 0, color: 'white', background: '#2c2c54' }} onClick={renderProps.onClick} disabled={renderProps.disabled}>
+            <button style={{ border: 0, color: 'white', background: '#2c2c54' }} onClick={renderProps.onClick}>
               Login
             </button>
           )}

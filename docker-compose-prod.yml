@@ -10,13 +10,17 @@ services:
       - "443:443"
     volumes:
       - ./nginx/conf.d/:/etc/nginx/conf.d/
+      - ./app/build/:/app/build/
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
     links:
       - api:api
-      - app:app
+    depends_on:
+      - app_build
   db:
     image: postgres:9.4.5
     env_file:
-      - ./api/.env
+      - ./api/.env.prod
     volumes:
       - /var/lib/postgresql/9.5/main:/var/lib/postgresql/data
     healthcheck:
@@ -35,20 +39,22 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    environment:
-      - HOST=http://dev.pomodoro.works
-      - ENTRYPOINT=app
+    env_file:
+      - ./api/.env.prod
     tty: true
     stdin_open: true
-  app:
+  app_build:
     volumes:
       - ./app:/var/www/pomodoro
     build:
       context: ./app
-    depends_on:
-      - api
-    environment:
-      - REACT_APP_API_ENDPOINT=http://dev-api.pomodoro.works
-      - ENTRYPOINT=development
+      dockerfile: Dockerfile_production_build
     tty: true
     stdin_open: true
+  certbot:
+    image: certbot/certbot
+    restart: unless-stopped
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"

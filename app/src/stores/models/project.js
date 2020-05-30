@@ -1,4 +1,4 @@
-export default class Object {
+export default class Project {
   constructor(params) {
     this.id = params.id;
     this.name = params.name;

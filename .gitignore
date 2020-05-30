@@ -27,3 +27,5 @@ yarn-error.log*
 
 *.swp
 *.swo
+data/certbot/conf/
+data/certbot/www/
