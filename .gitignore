@@ -10,7 +10,7 @@ app/node_modules
 
 # production
 app/build
-
+/letsencrypt/*
 # misc
 ./api/.env.prod
 .env

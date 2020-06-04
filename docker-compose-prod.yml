@@ -2,13 +2,16 @@ version: '2.1'
 services:
   reverse-proxy:
     image: traefik:v2.2
-    command: --api.insecure=true --providers.docker
+    command: --api.insecure=true --providers.docker --providers.file.filename=/traefik.toml --accesslog=true
     ports:
       - "80:80"
       - "8080:8080"
       - "443:443"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./letsencrypt:/letsencrypt
+      - ./traefik.toml:/traefik.toml
+    tty: true
   db:
     image: postgres:9.4.5
     env_file:
