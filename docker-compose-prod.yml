@@ -41,6 +41,8 @@ services:
       #- traefik.http.services.apiali.loadbalancer.healthcheck.hostname=dev-api.pomodoro.works
       #- traefik.http.services.apiali.loadbalancer.healthcheck.path=/health-check
       #- traefik.http.services.apiali.loadbalancer.healthcheck.interval=30s
+      - traefik.http.routers.api.tls=true
+      - traefik.http.routers.api.tls.certresolver=myresolver
   app:
     tty: true
     ports:
@@ -53,3 +55,5 @@ services:
     labels:
       - traefik.http.routers.app.rule=Host(`pomodoro.works`)
       - traefik.protocol=https
+      - traefik.http.routers.app.tls=true
+      - traefik.http.routers.app.tls.certresolver=myresolver
