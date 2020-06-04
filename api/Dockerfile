@@ -6,5 +6,4 @@ WORKDIR $APP_ROOT
 COPY Gemfile Gemfile.lock ./
 RUN bundle install
 COPY . .
-EXPOSE 4000
 CMD ["./config/container.sh"]

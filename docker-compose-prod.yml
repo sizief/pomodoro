@@ -1,22 +1,14 @@
 version: '2.1'
 services:
-  webserver:
-    image: nginx:alpine
-    container_name: webserver
-    restart: unless-stopped
-    tty: true
+  reverse-proxy:
+    image: traefik:v2.2
+    command: --api.insecure=true --providers.docker
     ports:
       - "80:80"
+      - "8080:8080"
       - "443:443"
     volumes:
-      - ./nginx/conf.d/:/etc/nginx/conf.d/
-      - ./app/build/:/app/build/
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
-    links:
-      - api:api
-    depends_on:
-      - app_build
+      - /var/run/docker.sock:/var/run/docker.sock
   db:
     image: postgres:9.4.5
     env_file:
@@ -41,11 +33,23 @@ services:
       - ./api/.env.prod
     tty: true
     stdin_open: true
-  app_build:
-    volumes:
-      - ./app/build:/var/www/pomodoro/build
+    ports:
+     - 4000:4000
+    labels:
+      - traefik.http.routers.api.rule=Host(`api.pomodoro.works`)
+      - traefik.protocol=https
+      #- traefik.http.services.apiali.loadbalancer.healthcheck.hostname=dev-api.pomodoro.works
+      #- traefik.http.services.apiali.loadbalancer.healthcheck.path=/health-check
+      #- traefik.http.services.apiali.loadbalancer.healthcheck.interval=30s
+  app:
+    tty: true
+    ports:
+      - "3000:80"
     build:
       context: ./app
-      dockerfile: Dockerfile_production_build
+      dockerfile: Dockerfile_production
     tty: true
     stdin_open: true
+    labels:
+      - traefik.http.routers.app.rule=Host(`pomodoro.works`)
+      - traefik.protocol=https

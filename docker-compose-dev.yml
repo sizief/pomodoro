@@ -1,5 +1,13 @@
 version: '2.1'
 services:
+  reverse-proxy:
+    image: traefik:v2.2
+    command: --api.insecure=true --providers.docker
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
   db:
     image: postgres:9.4.5
     env_file:
@@ -28,6 +36,8 @@ services:
       - ./api/.env
     tty: true
     stdin_open: true
+    labels:
+      - traefik.http.routers.api.rule=Host(`dev-api.pomodoro.works`)
   app:
     volumes:
       - ./app:/var/www/pomodoro
@@ -40,6 +50,9 @@ services:
     env_file:
       - ./app/.env
     environment:
-      - REACT_APP_API_ENDPOINT=http://dev-api.pomodoro.works:4000
+      - REACT_APP_API_ENDPOINT=http://dev-api.pomodoro.works
     tty: true
     stdin_open: true
+    labels:
+      - traefik.http.routers.app.rule=Host(`dev.pomodoro.works`)
+      - traefik.protocol=https
