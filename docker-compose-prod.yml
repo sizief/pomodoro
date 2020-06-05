@@ -45,7 +45,7 @@ services:
       db:
         condition: service_healthy
     env_file:
-      - ./api/.env.prod
+      - /home/sizief/pomodoro_project/pomodoro/api/.env.prod
     tty: true
     stdin_open: true
     ports:
@@ -67,6 +67,8 @@ services:
       dockerfile: Dockerfile_production
     tty: true
     stdin_open: true
+    env_file:
+      - /home/sizief/pomodoro_project/pomodoro/app/.env
     labels:
       - traefik.http.routers.app.rule=Host(`pomodoro.works`, `www.pomodoro.works`)
       - traefik.protocol=https
