@@ -15,12 +15,12 @@ Now you can check app at `dev.pomodoro.works` and traefik at `dev-traefik.pomodo
 - Run `npx eslint [file_name] --fix` to autofix
 
 ### Deployment
-- Clone this repo, change the values in `app/.env` and `api/.env.prod`
-- Run `docker-compose -f docker-compose-prod.yml build`
-- Run `docker-compose -f docker-compose-prod.yml up`
+- Clone this repo, change the values in `api/.env.prod`
 - Enable or disable Buildkite: `sudo systemctl enable buildkite-agent && sudo systemctl start buildkite-agent`
+- in production run `GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID docker-compose -f docker-compose-prod.yml up --build`
 
 ### TODO
+- remove api/.end.prod
 - In production, all requests for inner urls are redirected to index (react router). I hard coded paths in traefik label because I don't want to create a Nginx file just for this. But it is not clean. In the future create an Nginx config for app container and do 
 ```
 location / {
