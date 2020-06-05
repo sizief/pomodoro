@@ -1,5 +1,5 @@
 FROM node:13.14.0-slim as build-deps
-RUN echo 'hello I am here'
+RUN echo $GOOGLE_CLIENT_ID
 ARG REACT_APP_GOOGLE_CLIENT_ID
 ENV REACT_APP_GOOGLE_CLIENT_ID $GOOGLE_CLIENT_ID
 WORKDIR /usr/src/app
