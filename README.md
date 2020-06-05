@@ -1,3 +1,4 @@
+[![Build status](https://badge.buildkite.com/f22d7268b9647a9aa4288ec1d509e9d181679677139340e2de.svg)](https://buildkite.com/pomodoro-1/production)
 [Pomodoro.works](https://pomodoro.works). Built with React / Ruby Sinatra / Docker compose / Nginx / Traefik
 
 ### Development
