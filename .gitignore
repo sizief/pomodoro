@@ -12,9 +12,8 @@ app/node_modules
 app/build
 /letsencrypt/*
 # misc
-./api/.env.prod
-.env
-./app/.env.prod
+api/.env.prod
+app/.env.prod
 .DS_Store
 .env.local
 .env.development.local

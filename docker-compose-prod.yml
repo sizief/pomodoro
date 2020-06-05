@@ -65,12 +65,10 @@ services:
     build:
       context: ./app
       dockerfile: Dockerfile_production
+      args:
+        -  GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
     tty: true
     stdin_open: true
-    environment:
-      - REACT_APP_API_ENDPOINT=https://api.pomodoro.works
-      - REACT_APP_GOOGLE_CLIENT_ID=gholi
-      #- /home/sizief/pomodoro_project/pomodoro/app/.env
     labels:
       - traefik.http.routers.app.rule=Host(`pomodoro.works`, `www.pomodoro.works`)
       - traefik.protocol=https
