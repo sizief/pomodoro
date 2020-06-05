@@ -14,10 +14,16 @@ services:
       - traefik.http.routers.api.rule=Host(`traefik.pomodoro.works`)
       - traefik.http.routers.api.service=api@internal
       - traefik.http.routers.api.middlewares=auth
-      - traefik.http.middlewares.auth.basicauth.users=ali:$$apr1$$MD/.bAsj$$mVrYRcyWOihX9sllYJS8f0
       # Note: all dollar signs in the hash need to be doubled for escaping.
       # To create a user:password pair, the following command can be used:
       # echo $(htpasswd -nb user password) | sed -e s/\\$/\\$\\$/g
+      - traefik.http.middlewares.auth.basicauth.users=ali:$$apr1$$MD/.bAsj$$mVrYRcyWOihX9sllYJS8f0
+      # global redirect to https
+      - traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)
+      - traefik.http.routers.http-catchall.entrypoints=web
+      - traefik.http.routers.http-catchall.middlewares=redirect-to-https
+      # middleware redirect
+      - traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https
   db:
     image: postgres:9.4.5
     env_file:
@@ -45,13 +51,13 @@ services:
     ports:
      - 4000:4000
     labels:
-      - traefik.http.routers.pomodoro_api.rule=Host(`api.pomodoro.works`)
+      - traefik.http.routers.pomodoro-api.rule=Host(`api.pomodoro.works`)
       - traefik.protocol=https
       #- traefik.http.services.apiali.loadbalancer.healthcheck.hostname=dev-api.pomodoro.works
       #- traefik.http.services.apiali.loadbalancer.healthcheck.path=/health-check
       #- traefik.http.services.apiali.loadbalancer.healthcheck.interval=30s
-      - traefik.http.routers.pomodoro_api.tls=true
-      - traefik.http.routers.pomodoro_api.tls.certresolver=myresolver
+      - traefik.http.routers.pomodoro-api.tls=true
+      - traefik.http.routers.pomodoro-api.tls.certresolver=myresolver
   app:
     tty: true
     ports:
@@ -62,7 +68,12 @@ services:
     tty: true
     stdin_open: true
     labels:
-      - traefik.http.routers.app.rule=Host(`pomodoro.works`)
+      - traefik.http.routers.app.rule=Host(`pomodoro.works`, `www.pomodoro.works`)
       - traefik.protocol=https
       - traefik.http.routers.app.tls=true
       - traefik.http.routers.app.tls.certresolver=myresolver
+      - traefik.http.middlewares.route-to-index.stripprefix.prefixes=/project,/history
+      - traefik.http.routers.app.middlewares=route-to-index@docker
+      # this is not working because og Go Regex version. The idea is to catch all but static files
+      #- traefik.http.middlewares.route-to-index.stripprefixregex.regex="^((?!.png|.js|.json|.css|.jpeg).)*$"
+

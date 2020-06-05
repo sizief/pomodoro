@@ -20,4 +20,9 @@ Now you can check app at `dev.pomodoro.works` and traefik at `dev-traefik.pomodo
 - Run `docker-compose -f docker-compose-prod.yml up`
 
 ### TODO
-- remote uris are not working
+- In production, all requests for inner urls are redirected to index (react router). I hard coded paths in traefik label because I don't want to create a Nginx file just for this. But it is not clean. In the future create an Nginx config for app container and do 
+```
+location / {
+  try_files $uri /index.html;
+}
+```
