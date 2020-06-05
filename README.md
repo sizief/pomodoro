@@ -2,10 +2,10 @@
 [Pomodoro.works](https://pomodoro.works). Built with React / Ruby Sinatra / Docker compose / Nginx
 
 ### Development
-- Add this to `/etc/hosts` -> `127.0.0.1        dev.pomodoro.works      dev-api.pomodoro.works` (dev url is already added to [Google](https://console.developers.google.com/apis/credentials?project=pomodoro-1574243762652)). Then get `token_id` from the google console, and save it to `./api/.env`
+- Add this to `/etc/hosts` -> `127.0.0.1        dev.pomodoro.works      dev-api.pomodoro.works    dev-traefik.pomodoro.works` (dev url is already added to [Google](https://console.developers.google.com/apis/credentials?project=pomodoro-1574243762652)). Then get `token_id` from the google console, and save it to `./api/.env`
 - Cd to root of project and run `tmuxinator start`
 
-Now you can visit `dev.pomodoro.works:3000` and it should be working fine.
+Now you can check app at `dev.pomodoro.works` and traefik at `dev-traefik.pomodoro.works`
 
 - Create new migration with `bundle exec rake db:create_migration NAME=create_users`  
 - Run migrations with `bundle exec rake db:migrate`
@@ -18,8 +18,6 @@ Now you can visit `dev.pomodoro.works:3000` and it should be working fine.
 - Clone this repo, change the values in `app/.env` and `api/.env.prod`
 - Run `docker-compose -f docker-compose-prod.yml build`
 - Run `docker-compose -f docker-compose-prod.yml up`
-- Install CERTBOT. Renew with `certbot renew`
 
 ### TODO
-- SSl
 - remote uris are not working

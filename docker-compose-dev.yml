@@ -10,6 +10,9 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./letsencrypt:/letsencrypt
+    labels:
+      - traefik.http.routers.api.rule=Host(`dev-traefik.pomodoro.works`)
+      - traefik.http.routers.api.service=api@internal
   db:
     image: postgres:9.4.5
     env_file:
@@ -39,7 +42,7 @@ services:
     tty: true
     stdin_open: true
     labels:
-      - traefik.http.routers.api.rule=Host(`dev-api.pomodoro.works`)
+      - traefik.http.routers.pomodoro_api.rule=Host(`dev-api.pomodoro.works`)
   app:
     volumes:
       - ./app:/var/www/pomodoro

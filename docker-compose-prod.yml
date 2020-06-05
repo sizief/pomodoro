@@ -2,7 +2,7 @@ version: '2.1'
 services:
   reverse-proxy:
     image: traefik:v2.2
-    command: --api.insecure=true --providers.docker --accesslog=true --entrypoints.web.address=:80 --entrypoints.websecure.address=:443 --certificatesresolvers.myresolver.acme.email=sizief@gmail.com --certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json --certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web
+    command: --api.dashboard=true --providers.docker --accesslog=true --entrypoints.web.address=:80 --entrypoints.websecure.address=:443 --certificatesresolvers.myresolver.acme.email=sizief@gmail.com --certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json --certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web
     ports:
       - "80:80"
       - "8080:8080"
@@ -10,6 +10,14 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./letsencrypt:/letsencrypt
+    labels:
+      - traefik.http.routers.api.rule=Host(`traefik.pomodoro.works`)
+      - traefik.http.routers.api.service=api@internal
+      - traefik.http.routers.api.middlewares=auth
+      - traefik.http.middlewares.auth.basicauth.users=ali:$$apr1$$MD/.bAsj$$mVrYRcyWOihX9sllYJS8f0
+      # Note: all dollar signs in the hash need to be doubled for escaping.
+      # To create a user:password pair, the following command can be used:
+      # echo $(htpasswd -nb user password) | sed -e s/\\$/\\$\\$/g
   db:
     image: postgres:9.4.5
     env_file:
@@ -37,13 +45,13 @@ services:
     ports:
      - 4000:4000
     labels:
-      - traefik.http.routers.api.rule=Host(`api.pomodoro.works`)
+      - traefik.http.routers.pomodoro_api.rule=Host(`api.pomodoro.works`)
       - traefik.protocol=https
       #- traefik.http.services.apiali.loadbalancer.healthcheck.hostname=dev-api.pomodoro.works
       #- traefik.http.services.apiali.loadbalancer.healthcheck.path=/health-check
       #- traefik.http.services.apiali.loadbalancer.healthcheck.interval=30s
-      - traefik.http.routers.api.tls=true
-      - traefik.http.routers.api.tls.certresolver=myresolver
+      - traefik.http.routers.pomodoro_api.tls=true
+      - traefik.http.routers.pomodoro_api.tls.certresolver=myresolver
   app:
     tty: true
     ports:
