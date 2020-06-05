@@ -44,8 +44,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    env_file:
-      - /home/sizief/pomodoro_project/pomodoro/api/.env.prod
     tty: true
     stdin_open: true
     ports:
