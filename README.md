@@ -1,5 +1,4 @@
-[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fsizief%2Fpomodoro%2Fbadge%3Fref%3Dmaster&style=for-the-badge)](https://actions-badge.atrox.dev/sizief/pomodoro/goto?ref=master)    
-[Pomodoro.works](https://pomodoro.works). Built with React / Ruby Sinatra / Docker compose / Nginx
+[Pomodoro.works](https://pomodoro.works). Built with React / Ruby Sinatra / Docker compose / Nginx / Traefik
 
 ### Development
 - Add this to `/etc/hosts` -> `127.0.0.1        dev.pomodoro.works      dev-api.pomodoro.works    dev-traefik.pomodoro.works` (dev url is already added to [Google](https://console.developers.google.com/apis/credentials?project=pomodoro-1574243762652)). Then get `token_id` from the google console, and save it to `./api/.env`
@@ -18,6 +17,7 @@ Now you can check app at `dev.pomodoro.works` and traefik at `dev-traefik.pomodo
 - Clone this repo, change the values in `app/.env` and `api/.env.prod`
 - Run `docker-compose -f docker-compose-prod.yml build`
 - Run `docker-compose -f docker-compose-prod.yml up`
+- Enable or disable Buildkite: `sudo systemctl enable buildkite-agent && sudo systemctl start buildkite-agent`
 
 ### TODO
 - In production, all requests for inner urls are redirected to index (react router). I hard coded paths in traefik label because I don't want to create a Nginx file just for this. But it is not clean. In the future create an Nginx config for app container and do 
