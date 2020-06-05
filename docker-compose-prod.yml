@@ -9,7 +9,7 @@ services:
       - "443:443"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./letsencrypt:/letsencrypt
+      - ../data/letsencrypt:/letsencrypt
     labels:
       - traefik.http.routers.api.rule=Host(`traefik.pomodoro.works`)
       - traefik.http.routers.api.service=api@internal
