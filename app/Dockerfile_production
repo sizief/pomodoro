@@ -2,13 +2,11 @@ FROM node:13.14.0-slim as build-deps
 ARG GOOGLE_CLIENT_ID
 ENV REACT_APP_GOOGLE_CLIENT_ID $GOOGLE_CLIENT_ID
 RUN echo $REACT_APP_GOOGLE_CLIENT_ID
-
 WORKDIR /usr/src/app
 COPY package.json yarn.lock ./
 RUN yarn install
 COPY . .
 RUN node config/last_commit_updater.js
-RUN echo $REACT_APP_GOOGLE_CLIENT_ID
 RUN yarn build
 
 FROM nginx:alpine
