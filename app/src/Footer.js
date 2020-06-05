@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment'
 import { lastCommitUrl, lastCommitDateTime } from './config/Vars';
 
 class Footer extends Component {
@@ -7,7 +8,7 @@ class Footer extends Component {
       <footer>
         <div>
           <a href={lastCommitUrl}>
-            Last update at {lastCommitDateTime}
+            Last update {moment(lastCommitDateTime, "YYYY-MM-DDThh:mm:ssZ").fromNow()}
           </a>
         </div>
       </footer>
