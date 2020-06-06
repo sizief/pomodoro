@@ -15,7 +15,7 @@ Now you can check app at `dev.pomodoro.works` and traefik at `dev-traefik.pomodo
 - Run `npx eslint [file_name] --fix` to autofix
 
 ### Deployment
-- Clone this repo, change the values in `api/.env.prod`
+- Clone this repo, change the values in `api/.env.db` and then address it in docker-compose-prod file in `db` section.
 - Enable or disable Buildkite: `sudo systemctl enable buildkite-agent && sudo systemctl start buildkite-agent`
 - in production run `GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID docker-compose -f docker-compose-prod.yml up --build`
 

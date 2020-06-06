@@ -2,25 +2,8 @@
 
 #pomodoro {
   text-align: center;
-  height: 98%;
-  width: 98%;
   padding: 1%;
-  position: relative;
-  
   .top {
-    position: absolute;
-    top: 0;
-    width: 91%;
     padding: 4% 4%;
   }
-
-  .bottom {
-    width: 98%;
-    display: block;
-    border-top: 1px solid $color3;
-    position: absolute;
-    bottom:5%;
-    left:0;
-  }
 }
-

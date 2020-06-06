@@ -93,9 +93,6 @@ const Login = observer(class Login extends Component {
       <div id="loginBox">
         <div>
           { user.givenName }
-          {' '}
-          |
-          <span style={{ paddingLeft: 2 }} onClick={this.logout}>exit</span>
         </div>
       </div>
     );

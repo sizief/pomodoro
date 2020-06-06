@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './Pomodoro.scss';
 import Countdown from './Countdown';
-import Progress from './Progress';
 import Total from './Total';
 import CountingDialogue from './CountingDialogue';
 import user from '../stores/User'
@@ -12,9 +11,6 @@ class Pomodoro extends Component{
   constructor(props){
     super();
     this.state = {
-      numberOfDone: 0,
-      numberOfBreak: 0,
-      total: 0,
       counting: false,
       isBreak: false,
       firstTime: true
@@ -34,28 +30,9 @@ class Pomodoro extends Component{
 
   handleDone(projectId) {
     this.playSound();
-    if (user.isLogin) this.save(projectId);
-
     this.setState({counting: false});
-
     if (this.state.isBreak) return; //Only count WORK periods not BREAKS
-
-    if (this.state.numberOfDone < 3) {
-      this.setState({
-        numberOfDone: this.state.numberOfDone+1,
-        firstTime: false
-      });
-    } else {
-      this.setState({
-        numberOfDone: 0,
-        total: this.state.total+1
-      });
-    }
-  }
-
-  handleTotal() {
-    this.setState({total: this.state.total+1});
-    this.setState({numberOfDone: 0});
+    if (user.isLogin) this.save(projectId);
   }
 
   handleStartCounting(isBreak) {
@@ -89,15 +66,6 @@ class Pomodoro extends Component{
       <div id="pomodoro">
         <div className="top">
           {this.topElement()}
-        </div>
-        <div className="bottom">
-          <Progress numberOfDone={this.state.numberOfDone}/>
-          <Total 
-            numberOfDone={this.state.numberOfDone}
-            onDone={this.handleDone}
-            total={this.state.total}
-            onTotal={this.handleTotal}
-          />
         </div>
       </div>
     );
