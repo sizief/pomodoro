@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import moment from 'moment'
+import './Footer.scss';
 import { lastCommitUrl, lastCommitDateTime } from './config/Vars';
 
 class Footer extends Component {
   render() {
     return (
-      <footer>
-        <div>
-          <a href={lastCommitUrl}>
-            Last update {moment(lastCommitDateTime, "YYYY-MM-DDThh:mm:ssZ").fromNow()}
-          </a>
-        </div>
+      <footer id="footer">
+        <a href={lastCommitUrl}>
+          Last update {moment(lastCommitDateTime, "YYYY-MM-DDThh:mm:ssZ").fromNow()}
+        </a>
       </footer>
     );
   }

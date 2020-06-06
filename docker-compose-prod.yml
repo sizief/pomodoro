@@ -49,6 +49,8 @@ services:
     stdin_open: true
     ports:
      - 4000:4000
+    env_file:
+      - ./api/.env.prod
     labels:
       - traefik.http.routers.pomodoro-api.rule=Host(`api.pomodoro.works`)
       - traefik.protocol=https

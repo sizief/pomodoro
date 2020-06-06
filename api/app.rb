@@ -3,12 +3,10 @@
 require 'pry'
 require 'date'
 require 'dotenv/load'
-Dotenv.load("#{__dir__}/.env")
 require 'sinatra'
 require 'sinatra/reloader' if development?
 require 'sinatra/activerecord'
 require_relative './lib/pomodoro'
-
 set :bind, '0.0.0.0'
 
 before do

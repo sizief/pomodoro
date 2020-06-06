@@ -4,6 +4,7 @@ import './index.scss';
 import user from '../stores/User';
 import LoginInvite from '../loginInvite';
 import Pomodoros from '../stores/Pomodoros'
+import moment from 'moment'
 
 const History = observer(class History extends Component {
   constructor(props) {
@@ -33,7 +34,6 @@ const History = observer(class History extends Component {
     return (
       <thead>
         <tr>
-          <td className='title'>ID</td>
           <td className='title'>Project Name</td>
           <td className='title'>Time</td>
         </tr>
@@ -49,9 +49,8 @@ const History = observer(class History extends Component {
           { Pomodoros.list.map(
             (pomodoro) =>
               <tr key={pomodoro.id}>
-                <td>{pomodoro.id}</td>
                 <td>{pomodoro.projectName}</td>
-                <td>{pomodoro.date}</td>
+                <td>{moment(pomodoro.date).format('dddd, MMMM Do, h:mm a')}</td>
               </tr>
           )}
         </tbody>

@@ -16,7 +16,7 @@ services:
   db:
     image: postgres:9.4.5
     env_file:
-      - ./api/.env
+      - ./api/.env.dev
     volumes:
       - /var/lib/postgresql/9.5/main:/var/lib/postgresql/data
     healthcheck:
@@ -38,7 +38,7 @@ services:
       db:
         condition: service_healthy
     env_file:
-      - ./api/.env
+      - ./api/.env.dev
     tty: true
     stdin_open: true
     labels:
