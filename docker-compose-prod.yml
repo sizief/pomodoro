@@ -27,7 +27,8 @@ services:
   db:
     image: postgres:9.4.5
     env_file:
-      - ./api/.env.prod
+      - /home/sizief/pomodoro_project/env.db
+      # Check api/.env.db to see what should be inside this file
     volumes:
       - /var/lib/postgresql/9.5/main:/var/lib/postgresql/data
     healthcheck:
