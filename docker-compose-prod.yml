@@ -51,6 +51,7 @@ services:
      - 4000:4000
     env_file:
       - ./api/.env.prod
+      - /home/sizief/pomodoro_project/env.db
     labels:
       - traefik.http.routers.pomodoro-api.rule=Host(`api.pomodoro.works`)
       - traefik.protocol=https
