@@ -3,7 +3,7 @@
 
 ### Development
 - Add this to `/etc/hosts` -> `127.0.0.1        dev.pomodoro.works      dev-api.pomodoro.works    dev-traefik.pomodoro.works` (dev url is already added to [Google](https://console.developers.google.com/apis/credentials?project=pomodoro-1574243762652)). Then get `token_id` from the google console, and save it to `./app/.env.prod`
-- Cd to root of project and run `tmuxinator start`
+- Cd to root of project and run `tmuxinator`
 
 Now you can check app at `dev.pomodoro.works` and traefik at `dev-traefik.pomodoro.works`
 
