@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@nivo/bar": "^0.62.0",
     "axios": "^0.19.2",
     "lodash": "^4.17.15",
     "mobx": "^5.15.4",
