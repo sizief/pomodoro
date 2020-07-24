@@ -5,6 +5,7 @@ require_relative './message'
 require_relative './user'
 require_relative './project'
 require_relative './pomodoro_presenter'
+require_relative './pomodoro_grouped_presenter'
 
 class Pomodoro < ActiveRecord::Base
   validates_presence_of :project

@@ -131,21 +131,8 @@ end
 # == Returns
 #  Array<{created_at: Date, project_name: number of pomodoro, project_color: color_string }>
 get '/pomodoros_grouped' do
-  result = {pomodoros: [], projects: []}
-  (-21..0).each do |offset|
-    date = Date.today+offset
-    item = {}
-    item[:created_at] = date.strftime("%a %d")
-    Pomodoro.where(project_id: @user.projects)
-    .where(created_at: date.beginning_of_day..date.end_of_day).each do |pmd| 
-      project_key = pmd.project.name.to_sym
-      item[project_key] = item.key?(project_key) ? item[project_key]+1 : 1
-      item["#{pmd.project.name}Color".to_sym] = 'hsl(228, 70%, 50%)' #pmd.project.color
-    end
-    result[:pomodoros].push item
-  end
-  result[:projects] = @user.projects.map(&:name)
-  result.to_json
+  max_number_of_days = 21
+  PomodoroGroupedPresenter.new(@user, max_number_of_days).call.to_json
 end
 
 get '/health-check' do
