@@ -122,21 +122,22 @@ end
 # == Returns
 #  Array<Pomodoro>
 get '/pomodoros' do
-  PomodoroPresenter.new(@user).call.to_json
+  max_number_of_pomodoros = 10
+  PomodoroPresenter.new(@user).call[0..max_number_of_pomodoros].to_json
 end
 
 # == Header
 #  authurization <String>
 # == Returns
-#  Array<{completed_at: Date, project_name: number of pomodoro, project_color: color_string }>
-#TODO: this is not working, we remove completed_at, update this
+#  Array<{created_at: Date, project_name: number of pomodoro, project_color: color_string }>
 get '/pomodoros_grouped' do
   result = {pomodoros: [], projects: []}
-  (-7..0).each do |offset|
+  (-21..0).each do |offset|
     date = Date.today+offset
     item = {}
-    item[:completed_at] = date
-    Pomodoro.where(project_id: @user.projects).where(completed_at: date).each do |pmd| 
+    item[:created_at] = date.strftime("%a %d")
+    Pomodoro.where(project_id: @user.projects)
+    .where(created_at: date.beginning_of_day..date.end_of_day).each do |pmd| 
       project_key = pmd.project.name.to_sym
       item[project_key] = item.key?(project_key) ? item[project_key]+1 : 1
       item["#{pmd.project.name}Color".to_sym] = 'hsl(228, 70%, 50%)' #pmd.project.color

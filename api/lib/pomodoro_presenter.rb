@@ -5,6 +5,7 @@ class PomodoroPresenter
 
   def call
     Pomodoro.includes(:project).where(project_id: user.projects)
+    .order(created_at: :desc)
     .map{|pomodoro| {
       id: pomodoro.id,
       project_name: pomodoro.project.name,
