@@ -12,7 +12,7 @@ jobs:
       - run:
           name: Deploy Over SSH
           command: |
-             ssh -p $SSH_PORT $SSH_USER@$SSH_HOST "cd /var/www/pomodoro.works/ && git pull && GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID docker-compose -f docker-compose-prod.yml up --build"
+             ssh -p $SSH_PORT $SSH_USER@$SSH_HOST "echo 'logged in' && cd /var/www/pomodoro/ && git pull && GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID docker-compose -f docker-compose-prod.yml up --build"
 
 workflows:
   version: 2
