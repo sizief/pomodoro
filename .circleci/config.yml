@@ -16,10 +16,8 @@ version: 2
    version: 2
    build-and-deploy:
      jobs:
-       - build
+       #- build
        - deploy:
-           requires:
-             #- build # only deploy once build job has completed
            filters:
              branches:
                only: master # only deploy on the master branch
