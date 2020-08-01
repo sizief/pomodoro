@@ -34,4 +34,3 @@ location / {
   try_files $uri /index.html;
 }
 ```
-V1
