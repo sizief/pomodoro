@@ -6,10 +6,13 @@ jobs:
     machine:
       enabled: true
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "09:d3:82:cf:52:e0:cb:8a:50:ff:30:34:4e:a3:42:c2"
       - run:
           name: Deploy Over SSH
           command: |
-             ssh $SSH_USER@$SSH_HOST "cd projects/pomodoro && git pull && GOOGLE_CLIENT_ID=547377203778-rnas01ng8irns54hpho81roosuoagucq.apps.googleusercontent.com"
+             ssh -p $SSH_PORT $SSH_USER@$SSH_HOST "cd /var/www/pomodoro.works/ && git pull && GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID docker-compose -f docker-compose-prod.yml up --build"
 
 workflows:
   version: 2
