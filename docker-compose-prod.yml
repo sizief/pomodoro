@@ -2,11 +2,10 @@ version: '2.1'
 services:
   reverse-proxy:
     image: traefik:v2.2
-    command: --api.dashboard=true --providers.docker --accesslog=true --entrypoints.web.address=:80 --entrypoints.websecure.address=:443 --certificatesresolvers.myresolver.acme.email=sizief@gmail.com --certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json --certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web
+    command: --api.dashboard=true --providers.docker --accesslog=true --entrypoints.web.address=:3500 --entrypoints.websecure.address=:3501 --certificatesresolvers.myresolver.acme.email=sizief@gmail.com --certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json --certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web
     ports:
-      - "80:80"
-      - "8080:8080"
-      - "443:443"
+      - "3500:80"
+      - "3501:443"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ../data/letsencrypt:/letsencrypt
