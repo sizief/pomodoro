@@ -1,4 +1,3 @@
-[![Build status](https://badge.buildkite.com/f22d7268b9647a9aa4288ec1d509e9d181679677139340e2de.svg)](https://buildkite.com/pomodoro-1/production)
 [Pomodoro.works](https://pomodoro.works). Built with React / Ruby Sinatra / Docker compose / Nginx / Traefik
 
 ### Development
@@ -20,9 +19,9 @@ Now you can check app at `dev.pomodoro.works` and traefik at `dev-traefik.pomodo
 
 ### Deployment
 - Clone this repo, change the values in `api/.env.db` and then address it in docker-compose-prod file in `db` section.
-- Enable or disable Buildkite: `sudo systemctl enable buildkite-agent && sudo systemctl start buildkite-agent`
-- in production run `GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID docker-compose -f docker-compose-prod.yml up --build`
-
+- Setup nginx 'sudo systemctl restart nginx'. Files are in nginx folder in root.
+- In production run `GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID docker-compose -f docker-compose-prod.yml up --build`
+- [CI](https://app.circleci.com/pipelines/github/sizief/pomodoro) is triggered on each commit on master 
 ### TODO
 - show no activity if non exists
 - white page in all pages but pomodoro
