@@ -1,7 +1,0 @@
-# ~/.tmuxinator/sample.yml
-name: pomodoro
-root: ~/projects/pomodoro
-windows:
-  - docker: docker-compose -f docker-compose-dev.yml up --build
-  - editor: vim .
-  - bash:

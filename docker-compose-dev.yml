@@ -11,7 +11,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./letsencrypt:/letsencrypt
     labels:
-      - traefik.http.routers.api.rule=Host(`dev-traefik.pomodoro.works`)
+      - traefik.http.routers.api.rule=Host(`dev-traefik.pomodoro.aliday.me`)
       - traefik.http.routers.api.service=api@internal
   db:
     image: postgres:9.4.5
@@ -42,7 +42,7 @@ services:
     tty: true
     stdin_open: true
     labels:
-      - traefik.http.routers.pomodoro_api.rule=Host(`dev-api.pomodoro.works`)
+      - traefik.http.routers.pomodoro_api.rule=Host(`dev-api.pomodoro.aliday.me`)
   app:
     volumes:
       - ./app:/var/www/pomodoro
@@ -55,9 +55,10 @@ services:
     env_file:
       - ./app/.env
     environment:
-      - REACT_APP_API_ENDPOINT=http://dev-api.pomodoro.works
+      - REACT_APP_API_ENDPOINT=http://dev-api.pomodoro.aliday.me
+      - REACT_APP_GOOGLE_CLIENT_ID=547377203778-rnas01ng8irns54hpho81roosuoagucq.apps.googleusercontent.com
     tty: true
     stdin_open: true
     labels:
-      - traefik.http.routers.app.rule=Host(`dev.pomodoro.works`)
+      - traefik.http.routers.app.rule=Host(`dev.pomodoro.aliday.me`)
       - traefik.protocol=https
