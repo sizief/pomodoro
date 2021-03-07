@@ -25,6 +25,7 @@ Now you can check app at `dev.pomodoro.aliday.me` and traefik at `dev-traefik.po
 - [CI](https://app.circleci.com/pipelines/github/sizief/pomodoro) is triggered on each commit on master 
 ### TODO
 - fix login on development
+- access_id is returning as null in prod :shrug:
 - show no activity if non exists
 - white page in all pages but pomodoro
 - show total for a week
