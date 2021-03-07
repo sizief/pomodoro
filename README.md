@@ -16,6 +16,7 @@ Now you can check app at `dev.pomodoro.aliday.me` and traefik at `dev-traefik.po
 - Run to see StoryBook `npm run storybook`
 - Run `yarn` to install dependencies and `yarn upgarde` to upgarde all dependencies.
 - Run `npx eslint [file_name] --fix` to autofix
+- Cert managed by CloudFlare
 
 ### Deployment
 - Clone this repo, change the values in `api/.env.db` and then address it in docker-compose-prod file in `db` section.
